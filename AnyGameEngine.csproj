@@ -43,6 +43,15 @@
     <Compile Include="Engines\ZoneEngine.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Logic\Actions\LogicText.cs" />
+    <Compile Include="Entities\Logic\Actions\LogicRoomChange.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicBackUpOptionList.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicLoopContinue.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicLoopBreak.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicList.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicIgnorePoint.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicLoop.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicOptionList.cs" />
+    <Compile Include="Entities\Logic\Flow\LogicOption.cs" />
     <Compile Include="Entities\Logic\LogicNode.cs" />
     <Compile Include="Entities\Room.cs" />
     <Compile Include="Game.cs" />
@@ -50,7 +59,6 @@
     <Compile Include="Save.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\Logic\Flow\" />
     <Folder Include="Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
