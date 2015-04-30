@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Entities.Logic.Flow {
-	public class LogicLoop:LogicList {
-		public int Repeat = 0;
+	public class LogicOptionList:LogicList {
+		public string Text;
 
 		public override LogicNode Clone (LogicNode parent) {
-			LogicLoop clone = (LogicLoop) base.Clone (parent);
-			clone.Repeat = this.Repeat;
+			LogicOptionList clone = (LogicOptionList) base.Clone (parent);
+			clone.Text = this.Text;
 			return clone;
 		}
 	}

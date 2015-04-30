@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Entities.Logic.Flow {
-	public class LogicOption:LogicNode {
+	public class LogicOption:LogicList {
 		public string Text;
 
 		public override LogicNode Clone (LogicNode parent) {
