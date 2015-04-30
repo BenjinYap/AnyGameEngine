@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Entities {
-	public class Entity {
+	public abstract class Entity {
 
 	}
 }

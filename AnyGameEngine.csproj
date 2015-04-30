@@ -39,7 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engines\Engine.cs" />
+    <Compile Include="Engines\ZoneEngine.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Logic\Actions\LogicText.cs" />
+    <Compile Include="Entities\Logic\LogicNode.cs" />
+    <Compile Include="Entities\Room.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Save.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\Logic\Flow\" />
+    <Folder Include="Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

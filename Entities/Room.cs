@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Entities {
-	public class Room {
+	public class Room:Entity {
 
 	}
 }
