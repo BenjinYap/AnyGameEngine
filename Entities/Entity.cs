@@ -5,6 +5,6 @@ using System.Text;
 
 namespace AnyGameEngine.Entities {
 	public abstract class Entity {
-
+		public string Id;
 	}
 }
