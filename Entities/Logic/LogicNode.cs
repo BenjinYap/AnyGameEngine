@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace AnyGameEngine.Entities.Logic {
 	public abstract class LogicNode:Entity {
@@ -10,6 +11,21 @@ namespace AnyGameEngine.Entities.Logic {
 		public LogicNode Next;
 		public LogicNode Prev;
 		public List <LogicNode> Nodes;
+
+		public LogicNode (XmlNode node) {
+			this.Nodes = new List <LogicNode> ();
+
+			//create the child nodes
+			for (var i = 0; i < node.ChildNodes.Count; i++) {
+				LogicNode logic = GameStorage.CreateLogic (node.ChildNodes [i]);
+				this.Nodes.Add (logic);
+
+				if (i > 0) {
+					this.Nodes [i].Prev = this.Nodes [i - 1];
+					this.Nodes [i - 1].Next = this.Nodes [i];
+				}
+			}
+		}
 
 		public virtual LogicNode Clone (LogicNode parent) {
 			LogicNode clone = (LogicNode) Activator.CreateInstance (Type.GetType (base.GetType ().AssemblyQualifiedName));
