@@ -32,7 +32,6 @@ namespace AnyGameEngine.Engines {
 			}
 
 			LogicNode currentLogic = this.save.CurrentLogic;
-			
 			//logic flows
 			
 			if (currentLogic is LogicLoop) {
@@ -66,7 +65,7 @@ namespace AnyGameEngine.Engines {
 		private void DoLogicText () {
 			string text = ((LogicText) this.save.CurrentLogic).Text;
 			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
-
+			
 			if (this.Texted != null) {
 				this.Texted (this, new LogicTextEventArgs (text));
 			}

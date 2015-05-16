@@ -21,10 +21,10 @@ namespace AnyGameEngine.Entities.Logic {
 			this.Nodes = new List <LogicNode> ();
 
 			//create the child nodes
-			for (var i = 0; i < node.ChildNodes.Count; i++) {
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
 				LogicNode logic = GameStorage.CreateLogic (node.ChildNodes [i]);
 				this.Nodes.Add (logic);
-
+				
 				if (i > 0) {
 					this.Nodes [i].Prev = this.Nodes [i - 1];
 					this.Nodes [i - 1].Next = this.Nodes [i];
@@ -42,7 +42,7 @@ namespace AnyGameEngine.Entities.Logic {
 
 				if (i > 0) {
 					clone.Nodes [i].Prev = clone.Nodes [i - 1];
-					clone.Nodes [i].Next = clone.Nodes [i];
+					clone.Nodes [i - 1].Next = clone.Nodes [i];
 				}
 			}
 			
@@ -50,7 +50,7 @@ namespace AnyGameEngine.Entities.Logic {
 		}
 
 		public LogicNode GetNextLogic () {
-			//check all the cases for nulsl and stuff
+			//check all the cases for nulls and stuff
 
 			if (this.Next == null) {
 				if (this.Parent is LogicLoop) {

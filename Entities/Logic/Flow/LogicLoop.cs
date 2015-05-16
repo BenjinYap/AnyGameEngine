@@ -21,5 +21,9 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 			clone.Repeat = this.Repeat;
 			return clone;
 		}
+
+		public override string ToString () {
+			return string.Format ("LogicLoop, Repeat: {1}, Nodes: {0}", this.Repeat, this.Nodes.Count);
+		}
 	}
 }
