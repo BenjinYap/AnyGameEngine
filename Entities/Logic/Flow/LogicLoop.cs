@@ -7,13 +7,14 @@ using System.Xml;
 namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicLoop:LogicList {
 		public int Repeat = 0;
+		public int Count = 0;
 
 		public LogicLoop () {
 
 		}
 
 		public LogicLoop (XmlNode node):base (node) {
-
+			this.Repeat = int.Parse (node.Attributes ["repeat"].Value);
 		}
 
 		public override LogicNode Clone (LogicNode parent) {

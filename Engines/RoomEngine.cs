@@ -35,8 +35,7 @@ namespace AnyGameEngine.Engines {
 			//logic flows
 			
 			if (currentLogic is LogicLoop) {
-				this.save.CurrentLogic = currentLogic.Nodes [0];
-				this.Step ();
+				DoLogicLoop ();
 			} else if (currentLogic is LogicOptionList) {
 
 			} else if (currentLogic is LogicIgnorePoint) {
@@ -59,7 +58,19 @@ namespace AnyGameEngine.Engines {
 		}
 
 		private void DoLogicLoop () {
-			
+			LogicLoop loop = (LogicLoop) this.save.CurrentLogic;
+			int repeat = loop.Repeat;
+			int count = loop.Count;
+
+			if (count < repeat) {
+				loop.Count++;
+				this.save.CurrentLogic = loop.Nodes [0];
+			} else {
+				loop.Count = 0;
+				this.save.CurrentLogic = loop.GetNextLogic ();
+			}
+
+			this.Step ();
 		}
 
 		private void DoLogicText () {
