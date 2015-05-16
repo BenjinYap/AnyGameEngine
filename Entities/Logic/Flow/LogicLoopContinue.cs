@@ -6,6 +6,10 @@ using System.Xml;
 
 namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicLoopContinue:LogicNode {
+
+		public LogicLoopContinue () {
+
+		}
 		
 		public LogicLoopContinue (XmlNode node):base (node) {
 

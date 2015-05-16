@@ -7,6 +7,10 @@ using System.Xml;
 namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicList:LogicNode {
 
+		public LogicList () {
+
+		}
+
 		public LogicList (XmlNode node):base (node) {
 
 		}

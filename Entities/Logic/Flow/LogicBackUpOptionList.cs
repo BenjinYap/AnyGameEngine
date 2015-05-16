@@ -8,6 +8,10 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicBackUpOptionList:LogicNode {
 		public int Times = 0;
 
+		public LogicBackUpOptionList () {
+
+		}
+
 		public LogicBackUpOptionList (XmlNode node):base (node) {
 
 		}

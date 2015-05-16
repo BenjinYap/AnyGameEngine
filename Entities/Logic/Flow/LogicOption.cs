@@ -8,6 +8,10 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicOption:LogicList {
 		public string Text;
 
+		public LogicOption () {
+
+		}
+
 		public LogicOption (XmlNode node):base (node) {
 
 		}

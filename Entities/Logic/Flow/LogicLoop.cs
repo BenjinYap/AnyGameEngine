@@ -8,6 +8,10 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicLoop:LogicList {
 		public int Repeat = 0;
 
+		public LogicLoop () {
+
+		}
+
 		public LogicLoop (XmlNode node):base (node) {
 
 		}

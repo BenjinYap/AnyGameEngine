@@ -1,6 +1,7 @@
 ﻿using AnyGameEngine.Entities.Logic.Flow;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -11,6 +12,10 @@ namespace AnyGameEngine.Entities.Logic {
 		public LogicNode Next;
 		public LogicNode Prev;
 		public List <LogicNode> Nodes;
+
+		public LogicNode () {
+
+		}
 
 		public LogicNode (XmlNode node) {
 			this.Nodes = new List <LogicNode> ();
@@ -30,6 +35,7 @@ namespace AnyGameEngine.Entities.Logic {
 		public virtual LogicNode Clone (LogicNode parent) {
 			LogicNode clone = (LogicNode) Activator.CreateInstance (Type.GetType (base.GetType ().AssemblyQualifiedName));
 			clone.Parent = parent;
+			clone.Nodes = new List <LogicNode> ();
 
 			for (int i = 0; i < this.Nodes.Count; i++) {
 				clone.Nodes.Add (this.Nodes [i].Clone (clone));

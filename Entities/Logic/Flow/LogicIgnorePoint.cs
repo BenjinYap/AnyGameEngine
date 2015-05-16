@@ -7,6 +7,10 @@ using System.Xml;
 namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicIgnorePoint:LogicNode {
 
+		public LogicIgnorePoint () {
+
+		}
+
 		public LogicIgnorePoint (XmlNode node):base (node) {
 
 		}

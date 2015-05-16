@@ -8,6 +8,10 @@ namespace AnyGameEngine.Entities.Logic.Actions {
 	public class LogicText:LogicNode {
 		public string Text;
 
+		public LogicText () {
+
+		}
+
 		public LogicText (XmlNode node):base (node) {
 			this.Text = node.Attributes ["text"].Value;
 		}

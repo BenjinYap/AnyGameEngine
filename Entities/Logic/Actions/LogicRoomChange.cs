@@ -8,6 +8,10 @@ namespace AnyGameEngine.Entities.Logic.Actions {
 	public class LogicRoomChange:LogicNode {
 		public string RoomId;
 
+		public LogicRoomChange () {
+
+		}
+
 		public LogicRoomChange (XmlNode node):base (node) {
 			this.RoomId = node.Attributes ["roomId"].Value;
 		}

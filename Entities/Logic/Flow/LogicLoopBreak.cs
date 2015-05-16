@@ -6,7 +6,11 @@ using System.Xml;
 
 namespace AnyGameEngine.Entities.Logic.Flow {
 	public class LogicLoopBreak:LogicNode {
-		
+
+		public LogicLoopBreak () {
+
+		}
+
 		public LogicLoopBreak (XmlNode node):base (node) {
 
 		}
