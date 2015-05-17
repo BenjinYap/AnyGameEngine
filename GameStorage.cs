@@ -5,6 +5,7 @@ using AnyGameEngine.Entities.Logic.Flow;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -38,7 +39,10 @@ namespace AnyGameEngine {
 
 		public static Game FromXml (string xml) {
 			XmlDocument doc = new XmlDocument ();
-			doc.LoadXml (xml);
+			XmlReaderSettings settings = new XmlReaderSettings ();
+			settings.IgnoreComments = true;
+			XmlReader reader = XmlReader.Create (new StringReader (xml), settings);
+			doc.Load (reader);
 			XmlElement root = doc ["Game"];
 
 			Game game = new Game ();
