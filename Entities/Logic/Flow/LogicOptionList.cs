@@ -13,13 +13,17 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 		}
 
 		public LogicOptionList (XmlNode node):base (node) {
-
+			this.Text = node.Attributes ["text"].Value;
 		}
 
 		public override LogicNode Clone (LogicNode parent) {
 			LogicOptionList clone = (LogicOptionList) base.Clone (parent);
 			clone.Text = this.Text;
 			return clone;
+		}
+
+		public override string ToString () {
+			return string.Format ("LogicOptionList, Text: {0}, Nodes: {1}", this.Text, this.Nodes.Count);
 		}
 	}
 }

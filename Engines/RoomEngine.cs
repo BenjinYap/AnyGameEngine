@@ -8,18 +8,13 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Engines {
-	public class LogicTextEventArgs {
-		public string Text;
-
-		public LogicTextEventArgs (string text) {
-			this.Text = text;
-		}
-	}
-
 	public class RoomEngine:Engine {
 		public delegate void LogicTextEventHandler (object sender, LogicTextEventArgs e);
 		public event LogicTextEventHandler Texted;
 		
+		public delegate void LogicOptionListEventHandler (object sender, LogicOptionListEventArgs e);
+		public event LogicOptionListEventHandler OptionListed;
+
 		private State state = State.LogicAction;
 		
 		public RoomEngine (Game game, Save save):base (game, save) {
@@ -41,7 +36,7 @@ namespace AnyGameEngine.Engines {
 			} else if (currentLogic is LogicLoopBreak) {
 				DoLogicLoopBreak ();
 			} else if (currentLogic is LogicOptionList) {
-
+				DoLogicOptionList ();
 			} else if (currentLogic is LogicIgnorePoint) {
 
 			} else if (currentLogic is LogicBackUpOptionList) {
@@ -58,6 +53,21 @@ namespace AnyGameEngine.Engines {
 			}
 		}
 
+		public void SelectOption (int index) {
+			if (this.state != State.LogicOptionList) {
+				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
+			}
+
+			if (index < 0 || index > this.save.CurrentLogic.Nodes.Count - 1) {
+				throw new Exception ("Option index out of bounds.");
+			}
+
+			this.state = State.LogicAction;
+			this.save.CurrentLogic = this.save.CurrentLogic.Nodes [index].Nodes [0];
+			Step ();
+		}
+		
+		#region Do Logic Flows
 		private void DoLogicLoop () {
 			LogicLoop loop = (LogicLoop) this.save.CurrentLogic;
 			int repeat = loop.Repeat;
@@ -86,6 +96,40 @@ namespace AnyGameEngine.Engines {
 			Step ();
 		}
 
+		private void DoLogicOptionList () {
+			this.state = State.LogicOptionList;
+			LogicOptionList optionList = (LogicOptionList) this.save.CurrentLogic;
+			string [] options = optionList.Nodes.Select (a => ((LogicOption) a).Text).ToArray ();
+
+			if (this.OptionListed != null) {
+				this.OptionListed (this, new LogicOptionListEventArgs (optionList.Text, options));
+			}
+		}
+
+		//private void DoLogicBackUpOptionList () {
+		//	var times = this.save.currentLogic.times;
+		//	var logic = this.save.currentLogic;
+
+		//	for (var i = 0; i < times; i++) {
+		//		while (true) {
+		//			if (logic.parent === null) {
+		//				throw 'bad happened';
+		//			}
+
+		//			logic = logic.parent;
+
+		//			if (logic instanceof LogicOptionList) {
+		//				break;
+		//			}
+		//		}
+		//	}
+
+		//	this.save.currentLogic = logic;
+		//	this.step ();
+		//}
+		#endregion
+
+		#region Do Logic Actions
 		private void DoLogicText () {
 			string text = ((LogicText) this.save.CurrentLogic).Text;
 			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
@@ -94,6 +138,7 @@ namespace AnyGameEngine.Engines {
 				this.Texted (this, new LogicTextEventArgs (text));
 			}
 		}
+		#endregion
 
 		private enum State { LogicAction, LogicOptionList };
 	}
