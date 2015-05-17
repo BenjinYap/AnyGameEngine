@@ -13,7 +13,7 @@ namespace AnyGameEngine.Entities.Logic.Flow {
 		}
 
 		public LogicBackUpOptionList (XmlNode node):base (node) {
-
+			this.Times = int.Parse (node.Attributes ["times"].Value);
 		}
 
 		public override LogicNode Clone (LogicNode parent) {

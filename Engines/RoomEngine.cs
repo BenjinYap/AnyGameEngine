@@ -37,11 +37,10 @@ namespace AnyGameEngine.Engines {
 				DoLogicLoopBreak ();
 			} else if (currentLogic is LogicOptionList) {
 				DoLogicOptionList ();
+			} else if (currentLogic is LogicBackUpOptionList) {
+				DoLogicBackUpOptionList ();
 			} else if (currentLogic is LogicIgnorePoint) {
 
-			} else if (currentLogic is LogicBackUpOptionList) {
-
-				
 			} else if (currentLogic is LogicList) {
 				this.save.CurrentLogic = currentLogic.Nodes [0];
 				Step ();
@@ -106,27 +105,27 @@ namespace AnyGameEngine.Engines {
 			}
 		}
 
-		//private void DoLogicBackUpOptionList () {
-		//	var times = this.save.currentLogic.times;
-		//	var logic = this.save.currentLogic;
+		private void DoLogicBackUpOptionList () {
+			int times = ((LogicBackUpOptionList) this.save.CurrentLogic).Times;
+			LogicNode logic = this.save.CurrentLogic;
 
-		//	for (var i = 0; i < times; i++) {
-		//		while (true) {
-		//			if (logic.parent === null) {
-		//				throw 'bad happened';
-		//			}
+			for (var i = 0; i < times; i++) {
+				while (true) {
+					if (logic.Parent == null) {
+						throw new Exception ("bad happened");
+					}
 
-		//			logic = logic.parent;
+					logic = logic.Parent;
 
-		//			if (logic instanceof LogicOptionList) {
-		//				break;
-		//			}
-		//		}
-		//	}
+					if (logic is LogicOptionList) {
+						break;
+					}
+				}
+			}
 
-		//	this.save.currentLogic = logic;
-		//	this.step ();
-		//}
+			this.save.CurrentLogic = logic;
+			Step ();
+		}
 		#endregion
 
 		#region Do Logic Actions
