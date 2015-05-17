@@ -36,19 +36,20 @@ namespace AnyGameEngine.Engines {
 			
 			if (currentLogic is LogicLoop) {
 				DoLogicLoop ();
+			} else if (currentLogic is LogicLoopContinue) {
+				DoLogicLoopContinue ();
+			} else if (currentLogic is LogicLoopBreak) {
+				DoLogicLoopBreak ();
 			} else if (currentLogic is LogicOptionList) {
 
 			} else if (currentLogic is LogicIgnorePoint) {
 
 			} else if (currentLogic is LogicBackUpOptionList) {
 
-			} else if (currentLogic is LogicLoopContinue) {
-
-			} else if (currentLogic is LogicLoopBreak) {
-
+				
 			} else if (currentLogic is LogicList) {
 				this.save.CurrentLogic = currentLogic.Nodes [0];
-				this.Step ();
+				Step ();
 			//logic actions
 			} else if (currentLogic is LogicText) {
 				DoLogicText ();
@@ -70,7 +71,19 @@ namespace AnyGameEngine.Engines {
 				this.save.CurrentLogic = loop.GetNextLogic ();
 			}
 
-			this.Step ();
+			Step ();
+		}
+
+		private void DoLogicLoopContinue () {
+			this.save.CurrentLogic = this.save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+			Step ();
+		}
+
+		private void DoLogicLoopBreak () {
+			LogicLoop loop = (LogicLoop) this.save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+			loop.Count = 0;
+			this.save.CurrentLogic = loop.GetNextLogic ();
+			Step ();
 		}
 
 		private void DoLogicText () {
