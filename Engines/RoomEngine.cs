@@ -1,4 +1,5 @@
-﻿using AnyGameEngine.Entities.Logic;
+﻿using AnyGameEngine.Entities;
+using AnyGameEngine.Entities.Logic;
 using AnyGameEngine.Entities.Logic.Actions;
 using AnyGameEngine.Entities.Logic.Flow;
 using System;
@@ -9,11 +10,14 @@ using System.Text;
 
 namespace AnyGameEngine.Engines {
 	public class RoomEngine:Engine {
-		public delegate void LogicTextEventHandler (object sender, LogicTextEventArgs e);
-		public event LogicTextEventHandler Texted;
-		
 		public delegate void LogicOptionListEventHandler (object sender, LogicOptionListEventArgs e);
 		public event LogicOptionListEventHandler OptionListed;
+
+		public delegate void LogicTextEventHandler (object sender, LogicTextEventArgs e);
+		public event LogicTextEventHandler Texted;
+
+		public delegate void LogicRoomChangeEventHandler (object sender, LogicRoomChangeEventArgs e);
+		public event LogicRoomChangeEventHandler RoomChanged;
 
 		private State state = State.LogicAction;
 		
@@ -40,7 +44,7 @@ namespace AnyGameEngine.Engines {
 			} else if (currentLogic is LogicBackUpOptionList) {
 				DoLogicBackUpOptionList ();
 			} else if (currentLogic is LogicIgnorePoint) {
-
+				DoLogicIgnorePoint ();
 			} else if (currentLogic is LogicList) {
 				this.save.CurrentLogic = currentLogic.Nodes [0];
 				Step ();
@@ -48,7 +52,7 @@ namespace AnyGameEngine.Engines {
 			} else if (currentLogic is LogicText) {
 				DoLogicText ();
 			} else if (currentLogic is LogicRoomChange) {
-
+				DoLogicRoomChange ();
 			}
 		}
 
@@ -126,6 +130,11 @@ namespace AnyGameEngine.Engines {
 			this.save.CurrentLogic = logic;
 			Step ();
 		}
+
+		private void DoLogicIgnorePoint () {
+			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			this.Step ();
+		}
 		#endregion
 
 		#region Do Logic Actions
@@ -135,6 +144,59 @@ namespace AnyGameEngine.Engines {
 			
 			if (this.Texted != null) {
 				this.Texted (this, new LogicTextEventArgs (text));
+			}
+		}
+
+		private void DoLogicRoomChange () {
+			//get the zone to change to
+			string newRoomId = ((LogicRoomChange) this.save.CurrentLogic).RoomId;
+			Room room = this.game.Rooms.Find (a => a.Id == newRoomId);
+			
+			//get the logic after the logiczonechange
+			LogicNode nextLogic = this.save.CurrentLogic.GetNextLogic ();
+
+			//if there is no logic after the logiczonechange or the next logic is an ignore
+			if (nextLogic == null || nextLogic is LogicIgnorePoint) {
+				//set the new current logic to the first logic of the new zone
+				this.save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
+			} else {  //if there is logic after the logiczonechange
+				//the first logic in the new chain
+				LogicNode newCurrentLogic = nextLogic.Clone (null);
+
+				//reference to the previous logic in the new chain
+				LogicNode prevLogicNew = newCurrentLogic;
+
+				//reference to the previous logic in the old chain
+				LogicNode prevLogic = nextLogic;
+
+				while (true) {
+					//get the next logic in the old chain
+					nextLogic = prevLogic.GetNextLogic ();
+
+					//stop if there's nothing or it's an ignore
+					if (nextLogic == null || nextLogic is LogicIgnorePoint) {
+						break;
+					}
+
+					//clone the old chain into the new chain
+					prevLogicNew.Next = nextLogic.Clone (null);
+					prevLogicNew.Next.Prev = prevLogicNew;
+
+					//reset the old and new references
+					prevLogicNew = prevLogicNew.Next;
+					prevLogic = nextLogic;
+				}
+
+				//clone the new zone into the new chain
+				prevLogicNew.Next = room.LogicList.Clone (null).Nodes [0];
+				prevLogicNew.Next.Prev = prevLogicNew;
+
+				//finally set the new logic
+				this.save.CurrentLogic = newCurrentLogic;
+			}
+
+			if (this.RoomChanged != null) {
+				this.RoomChanged (this, new LogicRoomChangeEventArgs (room.Name));
 			}
 		}
 		#endregion

@@ -74,8 +74,6 @@ namespace AnyGameEngine {
 				existingRooms.Add (room.Id);
 
 				game.Rooms.Add (room);
-
-				break;
 			}
 		}
 	}
