@@ -1,4 +1,5 @@
-﻿using AnyGameEngine.Entities;
+﻿using AnyGameEngine.CustomVars;
+using AnyGameEngine.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace AnyGameEngine {
 		public string StartingRoomId;
 
 		public List <Room> Rooms = new List <Room> ();
+
+		public List <CustomVar> CustomVars = new List <CustomVar> ();
 
 		public Save GetFreshSave () {
 			Save save = new Save ();

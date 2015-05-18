@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomVars\CustomArrayVar.cs" />
+    <Compile Include="CustomVars\CustomSingleVar.cs" />
+    <Compile Include="CustomVars\CustomVar.cs" />
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Engines\RoomEngine.cs" />
     <Compile Include="Engines\RoomEngine.EventArgs.cs" />
