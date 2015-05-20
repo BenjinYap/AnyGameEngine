@@ -57,6 +57,7 @@
     <Compile Include="Entities\Logic\Flow\LogicOptionList.cs" />
     <Compile Include="Entities\Logic\Flow\LogicOption.cs" />
     <Compile Include="Entities\Logic\LogicNode.cs" />
+    <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Room.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameStorage.cs" />
