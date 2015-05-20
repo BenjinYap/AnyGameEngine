@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AnyGameEngine.Inventory {
 	public class ItemStack {
-
+		public string ItemId;
+		public int Count;
 	}
 }
