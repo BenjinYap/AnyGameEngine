@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine {
+namespace AnyGameEngine.GameData {
 	public static class GameStorage {
 		private static Dictionary <string, Type> types = new Dictionary <string, Type> ();
 
@@ -48,6 +48,7 @@ namespace AnyGameEngine {
 
 			Game game = new Game ();
 			GameStorage.LoadGeneral (game, root);
+			GameStorage.LoadCurrency (game, root ["Currency"]);
 			GameStorage.LoadRooms (game, root ["Rooms"]);
 			GameStorage.LoadCustomVars (game, root ["CustomVars"]);
 
@@ -60,6 +61,12 @@ namespace AnyGameEngine {
 			game.Description = attrs ["description"].Value;
 			game.Author = attrs ["author"].Value;
 			game.StartingRoomId = attrs ["startingRoomId"].Value;
+		}
+
+		private static void LoadCurrency (Game game, XmlElement node) {
+			XmlAttributeCollection attrs = node.Attributes;
+			game.Currency.StartingAmount = float.Parse (attrs ["startingAmount"].Value);
+			game.Currency.Name = attrs ["name"].Value;
 		}
 
 		private static void LoadRooms (Game game, XmlElement node) {
