@@ -21,6 +21,12 @@ namespace AnyGameEngine.Engines {
 		public delegate void LogicRoomChangeEventHandler (object sender, LogicRoomChangeEventArgs e);
 		public event LogicRoomChangeEventHandler RoomChanged;
 
+		public delegate void LogicCurrencySetEventHandler (object sender, LogicCurrencyChangeEventArgs e);
+		public event LogicCurrencySetEventHandler CurrencySet;
+
+		public delegate void LogicCurrencyModifyEventHandler (object sender, LogicCurrencyChangeEventArgs e);
+		public event LogicCurrencyModifyEventHandler CurrencyModified;
+
 		private State state = State.LogicAction;
 		
 		public RoomEngine (Game game, Save save):base (game, save) {
@@ -55,6 +61,10 @@ namespace AnyGameEngine.Engines {
 				DoLogicText ();
 			} else if (currentLogic is LogicRoomChange) {
 				DoLogicRoomChange ();
+			} else if (currentLogic is LogicCurrencySet) {
+				DoLogicCurrencySet ();
+			} else if (currentLogic is LogicCurrencyModify) {
+				DoLogicCurrencyModify ();
 			}
 		}
 
@@ -199,6 +209,24 @@ namespace AnyGameEngine.Engines {
 
 			if (this.RoomChanged != null) {
 				this.RoomChanged (this, new LogicRoomChangeEventArgs (room.Name));
+			}
+		}
+
+		private void DoLogicCurrencySet () {
+			float amount = ((LogicCurrencySet) this.save.CurrentLogic).Amount;
+			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			
+			if (this.CurrencySet != null) {
+				this.CurrencySet (this, new LogicCurrencyChangeEventArgs (amount));
+			}
+		}
+
+		private void DoLogicCurrencyModify () {
+			float amount = ((LogicCurrencyModify) this.save.CurrentLogic).Amount;
+			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			
+			if (this.CurrencyModified != null) {
+				this.CurrencyModified (this, new LogicCurrencyChangeEventArgs (amount));
 			}
 		}
 		#endregion

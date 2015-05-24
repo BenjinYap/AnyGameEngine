@@ -45,6 +45,8 @@
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Engines\RoomEngine.cs" />
     <Compile Include="Engines\RoomEngine.EventArgs.cs" />
+    <Compile Include="Entities\Logic\Actions\LogicCurrencyModify.cs" />
+    <Compile Include="Entities\Logic\Actions\LogicCurrencySet.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Entities\Logic\Actions\LogicText.cs" />
     <Compile Include="Entities\Logic\Actions\LogicRoomChange.cs" />

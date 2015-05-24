@@ -21,6 +21,8 @@ namespace AnyGameEngine.GameData {
 			//actions
 			GameStorage.types.Add ("LogicText", typeof (LogicText));
 			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
+			GameStorage.types.Add ("LogicCurrencySet", typeof (LogicCurrencySet));
+			GameStorage.types.Add ("LogicCurrencyModify", typeof (LogicCurrencyModify));
 
 			//flows
 			GameStorage.types.Add ("LogicList", typeof (LogicList));
