@@ -10,8 +10,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace AnyGameEngine.Engines {
-	public class RoomEngine:Engine {
+namespace AnyGameEngine.Modules.Core {
+	public class CoreModule:Module {
 		public delegate void LogicOptionListEventHandler (object sender, LogicOptionListEventArgs e);
 		public event LogicOptionListEventHandler OptionListed;
 
@@ -27,93 +27,58 @@ namespace AnyGameEngine.Engines {
 		public delegate void LogicCurrencyModifyEventHandler (object sender, LogicCurrencyChangeEventArgs e);
 		public event LogicCurrencyModifyEventHandler CurrencyModified;
 
-		private State state = State.LogicAction;
+		private State state = State.Action;
 		
-		public RoomEngine (Game game, Save save):base (game, save) {
-		
-		}
-
-		public void Step () {
-			if (this.state != State.LogicAction) {
-				throw new Exception ("Bad operation");
-			}
-
-			LogicNode currentLogic = this.save.CurrentLogic;
-			//logic flows
-			
-			if (currentLogic is LogicLoop) {
-				DoLogicLoop ();
-			} else if (currentLogic is LogicLoopContinue) {
-				DoLogicLoopContinue ();
-			} else if (currentLogic is LogicLoopBreak) {
-				DoLogicLoopBreak ();
-			} else if (currentLogic is LogicOptionList) {
-				DoLogicOptionList ();
-			} else if (currentLogic is LogicBackUpOptionList) {
-				DoLogicBackUpOptionList ();
-			} else if (currentLogic is LogicIgnorePoint) {
-				DoLogicIgnorePoint ();
-			} else if (currentLogic is LogicList) {
-				this.save.CurrentLogic = currentLogic.Nodes [0];
-				Step ();
-			//logic actions
-			} else if (currentLogic is LogicText) {
-				DoLogicText ();
-			} else if (currentLogic is LogicRoomChange) {
-				DoLogicRoomChange ();
-			} else if (currentLogic is LogicCurrencySet) {
-				DoLogicCurrencySet ();
-			} else if (currentLogic is LogicCurrencyModify) {
-				DoLogicCurrencyModify ();
-			}
+		public CoreModule (Overlord overlord):base (overlord) {
+			overlord.LogicHandlers [typeof (LogicList)] = DoLogicLoop;
 		}
 
 		public void SelectOption (int index) {
-			if (this.state != State.LogicOptionList) {
+			if (this.state != State.OptionList) {
 				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
 			}
 
-			if (index < 0 || index > this.save.CurrentLogic.Nodes.Count - 1) {
+			if (index < 0 || index > this.Save.CurrentLogic.Nodes.Count - 1) {
 				throw new Exception ("Option index out of bounds.");
 			}
 
-			this.state = State.LogicAction;
-			this.save.CurrentLogic = this.save.CurrentLogic.Nodes [index].Nodes [0];
-			Step ();
+			this.state = State.Action;
+			this.Save.CurrentLogic = this.Save.CurrentLogic.Nodes [index].Nodes [0];
+			this.Overlord.Step ();
 		}
 		
 		#region Do Logic Flows
 		private void DoLogicLoop () {
-			LogicLoop loop = (LogicLoop) this.save.CurrentLogic;
+			LogicLoop loop = (LogicLoop) this.Save.CurrentLogic;
 			int repeat = loop.Repeat;
 			int count = loop.Count;
 
 			if (count < repeat) {
 				loop.Count++;
-				this.save.CurrentLogic = loop.Nodes [0];
+				this.Save.CurrentLogic = loop.Nodes [0];
 			} else {
 				loop.Count = 0;
-				this.save.CurrentLogic = loop.GetNextLogic ();
+				this.Save.CurrentLogic = loop.GetNextLogic ();
 			}
 
-			Step ();
+			this.Overlord.Step ();
 		}
 
 		private void DoLogicLoopContinue () {
-			this.save.CurrentLogic = this.save.CurrentLogic.GetParentByType (typeof (LogicLoop));
-			Step ();
+			this.Save.CurrentLogic = this.Save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+			this.Overlord.Step ();
 		}
 
 		private void DoLogicLoopBreak () {
-			LogicLoop loop = (LogicLoop) this.save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+			LogicLoop loop = (LogicLoop) this.Save.CurrentLogic.GetParentByType (typeof (LogicLoop));
 			loop.Count = 0;
-			this.save.CurrentLogic = loop.GetNextLogic ();
-			Step ();
+			this.Save.CurrentLogic = loop.GetNextLogic ();
+			this.Overlord.Step ();
 		}
 
 		private void DoLogicOptionList () {
-			this.state = State.LogicOptionList;
-			LogicOptionList optionList = (LogicOptionList) this.save.CurrentLogic;
+			this.state = State.OptionList;
+			LogicOptionList optionList = (LogicOptionList) this.Save.CurrentLogic;
 			string [] options = optionList.Nodes.Select (a => ((LogicOption) a).Text).ToArray ();
 
 			if (this.OptionListed != null) {
@@ -122,8 +87,8 @@ namespace AnyGameEngine.Engines {
 		}
 
 		private void DoLogicBackUpOptionList () {
-			int times = ((LogicBackUpOptionList) this.save.CurrentLogic).Times;
-			LogicNode logic = this.save.CurrentLogic;
+			int times = ((LogicBackUpOptionList) this.Save.CurrentLogic).Times;
+			LogicNode logic = this.Save.CurrentLogic;
 
 			for (var i = 0; i < times; i++) {
 				while (true) {
@@ -139,20 +104,20 @@ namespace AnyGameEngine.Engines {
 				}
 			}
 
-			this.save.CurrentLogic = logic;
-			Step ();
+			this.Save.CurrentLogic = logic;
+			this.Overlord.Step ();
 		}
 
 		private void DoLogicIgnorePoint () {
-			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
-			this.Step ();
+			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
+			this.Overlord.Step ();
 		}
 		#endregion
 
 		#region Do Logic Actions
 		private void DoLogicText () {
-			string text = ((LogicText) this.save.CurrentLogic).Text;
-			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			string text = ((LogicText) this.Save.CurrentLogic).Text;
+			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
 			
 			if (this.Texted != null) {
 				this.Texted (this, new LogicTextEventArgs (text));
@@ -161,16 +126,16 @@ namespace AnyGameEngine.Engines {
 
 		private void DoLogicRoomChange () {
 			//get the zone to change to
-			string newRoomId = ((LogicRoomChange) this.save.CurrentLogic).RoomId;
-			Room room = this.game.Rooms.Find (a => a.Id == newRoomId);
+			string newRoomId = ((LogicRoomChange) this.Save.CurrentLogic).RoomId;
+			Room room = this.Game.Rooms.Find (a => a.Id == newRoomId);
 			
 			//get the logic after the logiczonechange
-			LogicNode nextLogic = this.save.CurrentLogic.GetNextLogic ();
+			LogicNode nextLogic = this.Save.CurrentLogic.GetNextLogic ();
 
 			//if there is no logic after the logiczonechange or the next logic is an ignore
 			if (nextLogic == null || nextLogic is LogicIgnorePoint) {
 				//set the new current logic to the first logic of the new zone
-				this.save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
+				this.Save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
 			} else {  //if there is logic after the logiczonechange
 				//the first logic in the new chain
 				LogicNode newCurrentLogic = nextLogic.Clone (null);
@@ -204,7 +169,7 @@ namespace AnyGameEngine.Engines {
 				prevLogicNew.Next.Prev = prevLogicNew;
 
 				//finally set the new logic
-				this.save.CurrentLogic = newCurrentLogic;
+				this.Save.CurrentLogic = newCurrentLogic;
 			}
 
 			if (this.RoomChanged != null) {
@@ -213,8 +178,8 @@ namespace AnyGameEngine.Engines {
 		}
 
 		private void DoLogicCurrencySet () {
-			float amount = ((LogicCurrencySet) this.save.CurrentLogic).Amount;
-			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			float amount = ((LogicCurrencySet) this.Save.CurrentLogic).Amount;
+			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
 			
 			if (this.CurrencySet != null) {
 				this.CurrencySet (this, new LogicCurrencyChangeEventArgs (amount));
@@ -222,8 +187,8 @@ namespace AnyGameEngine.Engines {
 		}
 
 		private void DoLogicCurrencyModify () {
-			float amount = ((LogicCurrencyModify) this.save.CurrentLogic).Amount;
-			this.save.CurrentLogic = this.save.CurrentLogic.GetNextLogic ();
+			float amount = ((LogicCurrencyModify) this.Save.CurrentLogic).Amount;
+			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
 			
 			if (this.CurrencyModified != null) {
 				this.CurrencyModified (this, new LogicCurrencyChangeEventArgs (amount));
@@ -231,6 +196,6 @@ namespace AnyGameEngine.Engines {
 		}
 		#endregion
 
-		private enum State { LogicAction, LogicOptionList };
+		private enum State { Action, OptionList };
 	}
 }

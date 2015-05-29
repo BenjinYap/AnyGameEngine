@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AnyGameEngine.Engines {
+namespace AnyGameEngine.Modules.Core {
 	
 	public class LogicOptionListEventArgs {
 		public string Text;

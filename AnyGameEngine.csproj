@@ -39,36 +39,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Overlord.cs" />
     <Compile Include="CustomVars\CustomArrayVar.cs" />
     <Compile Include="CustomVars\CustomSingleVar.cs" />
     <Compile Include="CustomVars\CustomVar.cs" />
-    <Compile Include="Engines\Engine.cs" />
-    <Compile Include="Engines\RoomEngine.cs" />
-    <Compile Include="Engines\RoomEngine.EventArgs.cs" />
-    <Compile Include="Entities\Logic\Actions\LogicCurrencyModify.cs" />
-    <Compile Include="Entities\Logic\Actions\LogicCurrencySet.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="Entities\Logic\Actions\LogicText.cs" />
-    <Compile Include="Entities\Logic\Actions\LogicRoomChange.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicBackUpOptionList.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicLoopContinue.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicLoopBreak.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicList.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicIgnorePoint.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicLoop.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicOptionList.cs" />
-    <Compile Include="Entities\Logic\Flow\LogicOption.cs" />
-    <Compile Include="Entities\Logic\LogicNode.cs" />
+    <Compile Include="Modules\Core\CoreModule.cs" />
+    <Compile Include="Modules\Core\CoreModule.EventArgs.cs" />
+    <Compile Include="Modules\Core\Logic\Actions\LogicCurrencyModify.cs" />
+    <Compile Include="Modules\Core\Logic\Actions\LogicCurrencySet.cs" />
+    <Compile Include="Modules\Entity.cs" />
+    <Compile Include="Modules\Core\Logic\Actions\LogicText.cs" />
+    <Compile Include="Modules\Core\Logic\Actions\LogicRoomChange.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicBackUpOptionList.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicLoopContinue.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicLoopBreak.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicList.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicIgnorePoint.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicLoop.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicOptionList.cs" />
+    <Compile Include="Modules\Core\Logic\Flow\LogicOption.cs" />
+    <Compile Include="Modules\Core\Logic\LogicNode.cs" />
     <Compile Include="GameData\Currency.cs" />
     <Compile Include="Inventory\Item.cs" />
-    <Compile Include="Entities\Room.cs" />
+    <Compile Include="Modules\Core\Room.cs" />
     <Compile Include="GameData\Game.cs" />
     <Compile Include="GameData\GameStorage.cs" />
     <Compile Include="Inventory\ItemStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData\Save.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Engines\" />
+    <Folder Include="Entities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
