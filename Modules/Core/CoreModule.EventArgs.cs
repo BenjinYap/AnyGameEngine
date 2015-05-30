@@ -30,12 +30,4 @@ namespace AnyGameEngine.Modules.Core {
 			this.Name = name;
 		}
 	}
-
-	public class LogicCurrencyChangeEventArgs {
-		public float Amount;
-
-		public LogicCurrencyChangeEventArgs (float amount) {
-			this.Amount = amount;
-		}
-	}
 }

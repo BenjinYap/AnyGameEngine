@@ -1,10 +1,11 @@
-﻿using System;
+﻿using AnyGameEngine.Entities.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine.Entities.Logic.Actions {
+namespace AnyGameEngine.Modules.Items.Actions {
 	public class LogicCurrencySet:LogicNode {
 		public float Amount;
 

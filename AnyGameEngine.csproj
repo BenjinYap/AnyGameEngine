@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Items\ItemsModule.cs" />
+    <Compile Include="Modules\Items\ItemsModule.EventArgs.cs" />
     <Compile Include="Modules\Module.cs" />
     <Compile Include="Overlord.cs" />
     <Compile Include="CustomVars\CustomArrayVar.cs" />
@@ -46,8 +48,8 @@
     <Compile Include="CustomVars\CustomVar.cs" />
     <Compile Include="Modules\Core\CoreModule.cs" />
     <Compile Include="Modules\Core\CoreModule.EventArgs.cs" />
-    <Compile Include="Modules\Core\Logic\Actions\LogicCurrencyModify.cs" />
-    <Compile Include="Modules\Core\Logic\Actions\LogicCurrencySet.cs" />
+    <Compile Include="Modules\Items\Actions\LogicCurrencyModify.cs" />
+    <Compile Include="Modules\Items\Actions\LogicCurrencySet.cs" />
     <Compile Include="Modules\Entity.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicText.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicRoomChange.cs" />

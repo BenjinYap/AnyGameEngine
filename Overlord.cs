@@ -1,6 +1,7 @@
 ﻿using AnyGameEngine.GameData;
 using AnyGameEngine.Modules;
 using AnyGameEngine.Modules.Core;
+using AnyGameEngine.Modules.Items;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Text;
 namespace AnyGameEngine {
 	public class Overlord {
 		public CoreModule CoreModule;
+		public ItemsModule ItemsModule;
 
 		internal Dictionary <Type, Action> LogicHandlers = new Dictionary <Type, Action> ();
 
@@ -18,13 +20,15 @@ namespace AnyGameEngine {
 		private Game game;
 		private Save save;
 
-		private bool stepDisabled;
-		private string invalidStepExceptionMessage;
+		private bool stepDisabled = false;
+		private string invalidStepExceptionMessage = "";
 
 		public Overlord () {
 			this.CoreModule = new CoreModule (this);
+			this.ItemsModule = new ItemsModule (this);
 
 			this.modules.Add (this.CoreModule);
+			this.modules.Add (this.ItemsModule);
 		}
 
 		public void SetGameAndSave (Game game, Save save) {
@@ -40,6 +44,10 @@ namespace AnyGameEngine {
 		public void Step () {
 			if (this.stepDisabled) {
 				throw new Exception (this.invalidStepExceptionMessage);
+			}
+
+			if (this.save.CurrentLogic == null) {
+				return;
 			}
 
 			Type currentLogicType = this.save.CurrentLogic.GetType ();

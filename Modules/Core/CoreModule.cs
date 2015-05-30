@@ -21,19 +21,21 @@ namespace AnyGameEngine.Modules.Core {
 		public delegate void LogicRoomChangeEventHandler (object sender, LogicRoomChangeEventArgs e);
 		public event LogicRoomChangeEventHandler RoomChanged;
 
-		public delegate void LogicCurrencySetEventHandler (object sender, LogicCurrencyChangeEventArgs e);
-		public event LogicCurrencySetEventHandler CurrencySet;
-
-		public delegate void LogicCurrencyModifyEventHandler (object sender, LogicCurrencyChangeEventArgs e);
-		public event LogicCurrencyModifyEventHandler CurrencyModified;
-
 		private State state = State.Action;
 		
 		public CoreModule (Overlord overlord):base (overlord) {
-			overlord.LogicHandlers [typeof (LogicList)] = DoLogicLoop;
+			overlord.LogicHandlers [typeof (LogicList)] = DoLogicList;
+			overlord.LogicHandlers [typeof (LogicLoop)] = DoLogicLoop;
+			overlord.LogicHandlers [typeof (LogicLoopContinue)] = DoLogicLoopContinue;
+			overlord.LogicHandlers [typeof (LogicLoopBreak)] = DoLogicLoopBreak;
+			overlord.LogicHandlers [typeof (LogicOptionList)] = DoLogicOptionList;
+
+			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
+			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
 		}
 
 		public void SelectOption (int index) {
+			
 			if (this.state != State.OptionList) {
 				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
 			}
@@ -48,6 +50,11 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		#region Do Logic Flows
+		private void DoLogicList () {
+			this.Save.CurrentLogic = this.Save.CurrentLogic.Nodes [0];
+			this.Overlord.Step ();
+		}
+
 		private void DoLogicLoop () {
 			LogicLoop loop = (LogicLoop) this.Save.CurrentLogic;
 			int repeat = loop.Repeat;
@@ -174,24 +181,6 @@ namespace AnyGameEngine.Modules.Core {
 
 			if (this.RoomChanged != null) {
 				this.RoomChanged (this, new LogicRoomChangeEventArgs (room.Name));
-			}
-		}
-
-		private void DoLogicCurrencySet () {
-			float amount = ((LogicCurrencySet) this.Save.CurrentLogic).Amount;
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
-			
-			if (this.CurrencySet != null) {
-				this.CurrencySet (this, new LogicCurrencyChangeEventArgs (amount));
-			}
-		}
-
-		private void DoLogicCurrencyModify () {
-			float amount = ((LogicCurrencyModify) this.Save.CurrentLogic).Amount;
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
-			
-			if (this.CurrencyModified != null) {
-				this.CurrencyModified (this, new LogicCurrencyChangeEventArgs (amount));
 			}
 		}
 		#endregion
