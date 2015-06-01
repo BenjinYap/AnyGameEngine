@@ -1,5 +1,5 @@
-﻿using AnyGameEngine.Entities.Logic.Flow;
-using AnyGameEngine.GameData;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.Core.Logic.Flow;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine.Entities.Logic {
+namespace AnyGameEngine.Modules.Core.Logic {
 	public abstract class LogicNode:Entity {
 		public LogicNode Parent;
 		public LogicNode Next;

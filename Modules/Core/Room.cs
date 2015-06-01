@@ -1,10 +1,10 @@
-﻿using AnyGameEngine.Entities.Logic.Flow;
+﻿using AnyGameEngine.Modules.Core.Logic.Flow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AnyGameEngine.Entities {
+namespace AnyGameEngine.Modules.Core {
 	public class Room:Entity {
 		public string Name;
 		public LogicList LogicList;

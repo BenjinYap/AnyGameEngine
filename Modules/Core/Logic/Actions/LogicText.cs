@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine.Entities.Logic.Actions {
+namespace AnyGameEngine.Modules.Core.Logic.Actions {
 	public class LogicText:LogicNode {
 		public string Text;
 

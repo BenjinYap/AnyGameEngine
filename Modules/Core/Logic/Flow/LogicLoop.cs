@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine.Entities.Logic.Flow {
+namespace AnyGameEngine.Modules.Core.Logic.Flow {
 	public class LogicLoop:LogicList {
 		public int Repeat = 0;
 		public int Count = 0;

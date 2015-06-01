@@ -1,8 +1,7 @@
-﻿using AnyGameEngine.Entities;
-using AnyGameEngine.Entities.Logic;
-using AnyGameEngine.Entities.Logic.Actions;
-using AnyGameEngine.Entities.Logic.Flow;
-using AnyGameEngine.GameData;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.Core.Logic;
+using AnyGameEngine.Modules.Core.Logic.Actions;
+using AnyGameEngine.Modules.Core.Logic.Flow;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;

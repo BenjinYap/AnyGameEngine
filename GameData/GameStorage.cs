@@ -1,9 +1,9 @@
 ﻿using AnyGameEngine.CustomVars;
-using AnyGameEngine.Entities;
-using AnyGameEngine.Entities.Logic;
-using AnyGameEngine.Entities.Logic.Actions;
-using AnyGameEngine.Entities.Logic.Flow;
-using AnyGameEngine.Modules.Items.Actions;
+using AnyGameEngine.Modules.Core;
+using AnyGameEngine.Modules.Core.Logic;
+using AnyGameEngine.Modules.Core.Logic.Actions;
+using AnyGameEngine.Modules.Core.Logic.Flow;
+using AnyGameEngine.Modules.Items.Logic.Actions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -84,7 +84,7 @@ namespace AnyGameEngine.GameData {
 				room.LogicList = new LogicList (r.ChildNodes [0]);
 				
 				existingRooms.Add (room.Id);
-
+				
 				game.Rooms.Add (room);
 			}
 		}

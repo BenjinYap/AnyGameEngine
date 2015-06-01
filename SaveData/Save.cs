@@ -1,5 +1,5 @@
-﻿using AnyGameEngine.Entities.Logic;
-using AnyGameEngine.Inventory;
+﻿using AnyGameEngine.Inventory;
+using AnyGameEngine.Modules.Core.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
