@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Currencies\CurrenciesModule.cs" />
+    <Compile Include="Modules\Currencies\CurrenciesModule.EventArgs.cs" />
     <Compile Include="Modules\Items\ItemsModule.cs" />
     <Compile Include="Modules\Items\ItemsModule.EventArgs.cs" />
     <Compile Include="Modules\Module.cs" />
@@ -48,8 +50,8 @@
     <Compile Include="CustomVars\CustomVar.cs" />
     <Compile Include="Modules\Core\CoreModule.cs" />
     <Compile Include="Modules\Core\CoreModule.EventArgs.cs" />
-    <Compile Include="Modules\Items\Logic\Actions\LogicCurrencyModify.cs" />
-    <Compile Include="Modules\Items\Logic\Actions\LogicCurrencySet.cs" />
+    <Compile Include="Modules\Currencies\Logic\Actions\LogicCurrencyModify.cs" />
+    <Compile Include="Modules\Currencies\Logic\Actions\LogicCurrencySet.cs" />
     <Compile Include="Modules\Entity.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicText.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicRoomChange.cs" />
@@ -71,7 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData\Save.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\Items\Logic\Actions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

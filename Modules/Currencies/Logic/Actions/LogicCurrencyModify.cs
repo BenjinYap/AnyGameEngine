@@ -5,26 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace AnyGameEngine.Modules.Items.Logic.Actions {
-	public class LogicCurrencySet:LogicNode {
+namespace AnyGameEngine.Modules.Currencies.Logic.Actions {
+	public class LogicCurrencyModify:LogicNode {
 		public float Amount;
 
-		public LogicCurrencySet () {
+		public LogicCurrencyModify () {
 
 		}
 
-		public LogicCurrencySet (XmlNode node):base (node) {
+		public LogicCurrencyModify (XmlNode node):base (node) {
 			this.Amount = float.Parse (node.Attributes ["amount"].Value);
 		}
 
 		public override LogicNode Clone (LogicNode parent) {
-			LogicCurrencySet clone = (LogicCurrencySet) base.Clone (parent);
+			LogicCurrencyModify clone = (LogicCurrencyModify) base.Clone (parent);
 			clone.Amount = this.Amount;
 			return clone;
 		}
 
 		public override string ToString () {
-			return string.Format ("Currency Set, Amount: {0}", this.Amount);
+			return string.Format ("Currency Modify, Amount: {0}", this.Amount);
 		}
 	}
 }

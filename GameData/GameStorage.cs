@@ -3,7 +3,7 @@ using AnyGameEngine.Modules.Core;
 using AnyGameEngine.Modules.Core.Logic;
 using AnyGameEngine.Modules.Core.Logic.Actions;
 using AnyGameEngine.Modules.Core.Logic.Flow;
-using AnyGameEngine.Modules.Items.Logic.Actions;
+using AnyGameEngine.Modules.Currencies.Logic.Actions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,6 +1,7 @@
 ﻿using AnyGameEngine.GameData;
 using AnyGameEngine.Modules;
 using AnyGameEngine.Modules.Core;
+using AnyGameEngine.Modules.Currencies;
 using AnyGameEngine.Modules.Items;
 using AnyGameEngine.SaveData;
 using System;
@@ -11,6 +12,7 @@ using System.Text;
 namespace AnyGameEngine {
 	public class Overlord {
 		public CoreModule CoreModule;
+		public CurrenciesModule CurrenciesModule;
 		public ItemsModule ItemsModule;
 
 		internal Dictionary <Type, Action> LogicHandlers = new Dictionary <Type, Action> ();
@@ -25,9 +27,11 @@ namespace AnyGameEngine {
 
 		public Overlord () {
 			this.CoreModule = new CoreModule (this);
+			this.CurrenciesModule = new CurrenciesModule (this);
 			this.ItemsModule = new ItemsModule (this);
 
 			this.modules.Add (this.CoreModule);
+			this.modules.Add (this.CurrenciesModule);
 			this.modules.Add (this.ItemsModule);
 		}
 
