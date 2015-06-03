@@ -1,11 +1,11 @@
-﻿using AnyGameEngine.GameData;
-using AnyGameEngine.Modules.Core.Logic.Flow;
+﻿using AnyGameEngine.Modules.Core.Logic.Flow;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using AnyGameEngine.GameData;
 
 namespace AnyGameEngine.Modules.Core.Logic {
 	public abstract class LogicNode:Entity {

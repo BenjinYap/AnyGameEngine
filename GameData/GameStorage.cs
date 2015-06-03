@@ -3,7 +3,9 @@ using AnyGameEngine.Modules.Core;
 using AnyGameEngine.Modules.Core.Logic;
 using AnyGameEngine.Modules.Core.Logic.Actions;
 using AnyGameEngine.Modules.Core.Logic.Flow;
-using AnyGameEngine.Modules.Currencies.Logic.Actions;
+using AnyGameEngine.Modules.GlobalResources;
+using AnyGameEngine.Modules.GlobalResources.Logic.Actions;
+using AnyGameEngine.Other;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,8 +24,8 @@ namespace AnyGameEngine.GameData {
 			//actions
 			GameStorage.types.Add ("LogicText", typeof (LogicText));
 			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
-			GameStorage.types.Add ("LogicCurrencySet", typeof (LogicCurrencySet));
-			GameStorage.types.Add ("LogicCurrencyModify", typeof (LogicCurrencyModify));
+			GameStorage.types.Add ("LogicCurrencySet", typeof (LogicGlobalResourceSet));
+			GameStorage.types.Add ("LogicCurrencyModify", typeof (LogicGlobalResourceModify));
 
 			//flows
 			GameStorage.types.Add ("LogicList", typeof (LogicList));
@@ -51,7 +53,7 @@ namespace AnyGameEngine.GameData {
 
 			Game game = new Game ();
 			GameStorage.LoadGeneral (game, root);
-			GameStorage.LoadCurrency (game, root ["Currency"]);
+			GameStorage.LoadGlobalResources (game, root ["GlobalResources"]);
 			GameStorage.LoadRooms (game, root ["Rooms"]);
 			GameStorage.LoadCustomVars (game, root ["CustomVars"]);
 
@@ -66,22 +68,33 @@ namespace AnyGameEngine.GameData {
 			game.StartingRoomId = attrs ["startingRoomId"].Value;
 		}
 
-		private static void LoadCurrency (Game game, XmlElement node) {
-			XmlAttributeCollection attrs = node.Attributes;
-			game.Currency.StartingAmount = float.Parse (attrs ["startingAmount"].Value);
-			game.Currency.Name = attrs ["name"].Value;
+		private static void LoadGlobalResources (Game game, XmlElement node) {
+			UniqueList <string> existing = new UniqueList <string> ("Duplicate global resource {{}}");
+
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
+				XmlNode n = node.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
+
+				existing.Add (attrs ["id"].Value);
+
+				GlobalResource resource = new GlobalResource ();
+				resource.Id = attrs ["id"].Value;
+				resource.Name = attrs ["name"].Value;
+				resource.StartingAmount = float.Parse (attrs ["startingAmount"].Value);
+				game.GlobalResources.Add (resource);
+			}
 		}
 
 		private static void LoadRooms (Game game, XmlElement node) {
 			List <string> existingRooms = new List <string> ();
 			
-			for (var i = 0; i < node.ChildNodes.Count; i++) {
-				XmlNode r = node.ChildNodes [i];
-				XmlAttributeCollection attrs = r.Attributes;
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
+				XmlNode n = node.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
 				Room room = new Room ();
 				room.Id = attrs ["id"].Value;
 				room.Name = attrs ["name"].Value;
-				room.LogicList = new LogicList (r.ChildNodes [0]);
+				room.LogicList = new LogicList (n.ChildNodes [0]);
 				
 				existingRooms.Add (room.Id);
 				

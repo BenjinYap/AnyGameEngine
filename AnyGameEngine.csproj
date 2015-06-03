@@ -39,19 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\Currencies\CurrenciesModule.cs" />
-    <Compile Include="Modules\Currencies\CurrenciesModule.EventArgs.cs" />
+    <Compile Include="Modules\GlobalResources\GlobalResourcesModule.cs" />
+    <Compile Include="Modules\GlobalResources\GlobalResourcesModule.EventArgs.cs" />
     <Compile Include="Modules\Items\ItemsModule.cs" />
     <Compile Include="Modules\Items\ItemsModule.EventArgs.cs" />
     <Compile Include="Modules\Module.cs" />
+    <Compile Include="Other\UniqueList.cs" />
     <Compile Include="Overlord.cs" />
     <Compile Include="CustomVars\CustomArrayVar.cs" />
     <Compile Include="CustomVars\CustomSingleVar.cs" />
     <Compile Include="CustomVars\CustomVar.cs" />
     <Compile Include="Modules\Core\CoreModule.cs" />
     <Compile Include="Modules\Core\CoreModule.EventArgs.cs" />
-    <Compile Include="Modules\Currencies\Logic\Actions\LogicCurrencyModify.cs" />
-    <Compile Include="Modules\Currencies\Logic\Actions\LogicCurrencySet.cs" />
+    <Compile Include="Modules\GlobalResources\Logic\Actions\LogicGlobalResourceModify.cs" />
+    <Compile Include="Modules\GlobalResources\Logic\Actions\LogicGlobalResourceSet.cs" />
     <Compile Include="Modules\Entity.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicText.cs" />
     <Compile Include="Modules\Core\Logic\Actions\LogicRoomChange.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Modules\Core\Logic\Flow\LogicOptionList.cs" />
     <Compile Include="Modules\Core\Logic\Flow\LogicOption.cs" />
     <Compile Include="Modules\Core\Logic\LogicNode.cs" />
-    <Compile Include="GameData\Currency.cs" />
+    <Compile Include="Modules\GlobalResources\GlobalResource.cs" />
     <Compile Include="Inventory\Item.cs" />
     <Compile Include="Modules\Core\Room.cs" />
     <Compile Include="GameData\Game.cs" />

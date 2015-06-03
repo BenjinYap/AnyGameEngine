@@ -1,5 +1,6 @@
 ﻿using AnyGameEngine.Inventory;
 using AnyGameEngine.Modules.Core.Logic;
+using AnyGameEngine.Modules.GlobalResources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace AnyGameEngine.SaveData {
 	public class Save {
 		public string CurrentRoomId;
 		public LogicNode CurrentLogic;
+
+		public Dictionary <string, float> GlobalResources = new Dictionary <string, float> ();
 
 		public float CurrencyAmount;
 

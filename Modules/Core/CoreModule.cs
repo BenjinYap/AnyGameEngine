@@ -1,4 +1,4 @@
-﻿using AnyGameEngine.GameData;
+﻿using AnyGameEngine.Modules.GlobalResources;
 using AnyGameEngine.Modules.Core.Logic;
 using AnyGameEngine.Modules.Core.Logic.Actions;
 using AnyGameEngine.Modules.Core.Logic.Flow;
