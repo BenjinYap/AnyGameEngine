@@ -21,20 +21,22 @@ namespace AnyGameEngine.Modules.GlobalResources {
 
 		#region Do Logic Actions
 		private void DoLogicGlobalResourceSet () {
-			float amount = ((LogicGlobalResourceSet) this.Save.CurrentLogic).Amount;
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
+			LogicGlobalResourceSet logic = (LogicGlobalResourceSet) this.Save.CurrentLogic;
+			this.Save.GlobalResources [logic.ResourceId] = logic.Amount;
+			this.Save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceSet != null) {
-				this.GlobalResourceSet (this, new LogicGlobalResourceChangeEventArgs (amount));
+				this.GlobalResourceSet (this, new LogicGlobalResourceChangeEventArgs (logic.Amount));
 			}
 		}
 
 		private void DoLogicGlobalResourceModify () {
-			float amount = ((LogicGlobalResourceModify) this.Save.CurrentLogic).Amount;
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
+			LogicGlobalResourceModify logic = (LogicGlobalResourceModify) this.Save.CurrentLogic;
+			this.Save.GlobalResources [logic.ResourceId] += logic.Amount;
+			this.Save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceModified != null) {
-				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (amount));
+				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (logic.Amount));
 			}
 		}
 		#endregion

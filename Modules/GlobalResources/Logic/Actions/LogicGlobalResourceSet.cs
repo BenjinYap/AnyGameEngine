@@ -7,6 +7,7 @@ using System.Xml;
 
 namespace AnyGameEngine.Modules.GlobalResources.Logic.Actions {
 	public class LogicGlobalResourceSet:LogicNode {
+		public string ResourceId;
 		public float Amount;
 
 		public LogicGlobalResourceSet () {
@@ -14,11 +15,13 @@ namespace AnyGameEngine.Modules.GlobalResources.Logic.Actions {
 		}
 
 		public LogicGlobalResourceSet (XmlNode node):base (node) {
+			this.ResourceId = node.Attributes ["resourceId"].Value;
 			this.Amount = float.Parse (node.Attributes ["amount"].Value);
 		}
 
 		public override LogicNode Clone (LogicNode parent) {
 			LogicGlobalResourceSet clone = (LogicGlobalResourceSet) base.Clone (parent);
+			clone.ResourceId = this.ResourceId;
 			clone.Amount = this.Amount;
 			return clone;
 		}
