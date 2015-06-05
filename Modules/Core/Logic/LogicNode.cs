@@ -15,10 +15,13 @@ namespace AnyGameEngine.Modules.Core.Logic {
 		public List <LogicNode> Nodes;
 
 		public LogicNode () {
-
+			
 		}
 
 		public LogicNode (XmlNode node) {
+			XmlAttributeCollection attrs = node.Attributes;
+			this.Id = attrs ["id"] == null ? "" : attrs ["id"].Value;
+
 			this.Nodes = new List <LogicNode> ();
 
 			//create the child nodes
