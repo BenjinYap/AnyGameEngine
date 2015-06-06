@@ -24,18 +24,6 @@ namespace AnyGameEngine.Modules.Core {
 		private State state = State.Action;
 		
 		public CoreModule (Overlord overlord):base (overlord) {
-			GameStorage.types.Add ("LogicText", typeof (LogicText));
-			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
-
-			GameStorage.types.Add ("LogicList", typeof (LogicList));
-			GameStorage.types.Add ("LogicOption", typeof (LogicOption));
-			GameStorage.types.Add ("LogicOptionList", typeof (LogicOptionList));
-			GameStorage.types.Add ("LogicBackUpOptionList", typeof (LogicBackUpOptionList));
-			GameStorage.types.Add ("LogicLoop", typeof (LogicLoop));
-			GameStorage.types.Add ("LogicLoopBreak", typeof (LogicLoopBreak));
-			GameStorage.types.Add ("LogicLoopContinue", typeof (LogicLoopContinue));
-			GameStorage.types.Add ("LogicIgnorePoint", typeof (LogicIgnorePoint));
-
 			overlord.LogicHandlers [typeof (LogicList)] = DoLogicList;
 			overlord.LogicHandlers [typeof (LogicLoop)] = DoLogicLoop;
 			overlord.LogicHandlers [typeof (LogicLoopContinue)] = DoLogicLoopContinue;
@@ -194,5 +182,19 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		private enum State { Action, OptionList };
+
+		static CoreModule () {
+			GameStorage.types.Add ("LogicText", typeof (LogicText));
+			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
+
+			GameStorage.types.Add ("LogicList", typeof (LogicList));
+			GameStorage.types.Add ("LogicOption", typeof (LogicOption));
+			GameStorage.types.Add ("LogicOptionList", typeof (LogicOptionList));
+			GameStorage.types.Add ("LogicBackUpOptionList", typeof (LogicBackUpOptionList));
+			GameStorage.types.Add ("LogicLoop", typeof (LogicLoop));
+			GameStorage.types.Add ("LogicLoopBreak", typeof (LogicLoopBreak));
+			GameStorage.types.Add ("LogicLoopContinue", typeof (LogicLoopContinue));
+			GameStorage.types.Add ("LogicIgnorePoint", typeof (LogicIgnorePoint));
+		}
 	}
 }

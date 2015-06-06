@@ -12,9 +12,5 @@ namespace AnyGameEngine.Modules.Items {
 		public ItemsModule (Overlord overlord):base (overlord) {
 			
 		}
-
-		#region Do Logic Actions
-		
-		#endregion
 	}
 }
