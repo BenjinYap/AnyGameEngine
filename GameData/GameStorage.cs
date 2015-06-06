@@ -5,6 +5,7 @@ using AnyGameEngine.Modules.Core.Logic.Actions;
 using AnyGameEngine.Modules.Core.Logic.Flow;
 using AnyGameEngine.Modules.GlobalResources;
 using AnyGameEngine.Modules.GlobalResources.Logic.Actions;
+using AnyGameEngine.Modules.Items;
 using AnyGameEngine.Other;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace AnyGameEngine.GameData {
 			GameStorage.LoadGlobalResources (game, root ["GlobalResources"]);
 			GameStorage.LoadRooms (game, root ["Rooms"]);
 			GameStorage.LoadCustomVars (game, root ["CustomVars"]);
+			GameStorage.LoadItems (game, root ["Items"]);
 
 			return game;
 		}
@@ -117,6 +119,22 @@ namespace AnyGameEngine.GameData {
 
 				customVar.Name = name;
 				existingVars.Add (name);
+			}
+		}
+
+		private static void LoadItems (Game game, XmlElement node) {
+			UniqueList <string> existing = new UniqueList <string> ("Duplicate item {{}}");
+
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
+				XmlNode n = node.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
+
+				existing.Add (attrs ["id"].Value);
+
+				Item item = new Item ();
+				item.Id = attrs ["id"].Value;
+				item.Name = attrs ["name"].Value;
+				game.Items.Add (item);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using AnyGameEngine.CustomVars;
 using AnyGameEngine.Modules.Core;
 using AnyGameEngine.Modules.GlobalResources;
+using AnyGameEngine.Modules.Items;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace AnyGameEngine.GameData {
 		public List <Room> Rooms = new List <Room> ();
 
 		public List <CustomVar> CustomVars = new List <CustomVar> ();
+
+		public List <Item> Items = new List <Item> ();
 
 		public Save GetFreshSave () {
 			Save save = new Save ();

@@ -1,6 +1,6 @@
-﻿using AnyGameEngine.Inventory;
-using AnyGameEngine.Modules.Core.Logic;
+﻿using AnyGameEngine.Modules.Core.Logic;
 using AnyGameEngine.Modules.GlobalResources;
+using AnyGameEngine.Modules.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
