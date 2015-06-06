@@ -1,4 +1,5 @@
-﻿using AnyGameEngine.Modules.GlobalResources.Logic.Actions;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.GlobalResources.Logic.Actions;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		public event LogicGlobalResourceModifyEventHandler GlobalResourceModified;
 
 		public GlobalResourcesModule (Overlord overlord):base (overlord) {
+			GameStorage.types.Add ("LogicGlobalResourceSet", typeof (LogicGlobalResourceSet));
+			GameStorage.types.Add ("LogicGlobalResourceModify", typeof (LogicGlobalResourceModify));
+
 			overlord.LogicHandlers [typeof (LogicGlobalResourceSet)] = DoLogicGlobalResourceSet;
 			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
 		}
 
-		#region Do Logic Actions
 		private void DoLogicGlobalResourceSet () {
 			LogicGlobalResourceSet logic = (LogicGlobalResourceSet) this.Save.CurrentLogic;
 			this.Save.GlobalResources [logic.ResourceId] = logic.Amount;
@@ -39,6 +42,5 @@ namespace AnyGameEngine.Modules.GlobalResources {
 				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (logic.Amount));
 			}
 		}
-		#endregion
 	}
 }

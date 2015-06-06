@@ -15,28 +15,8 @@ using System.Text;
 using System.Xml;
 
 namespace AnyGameEngine.GameData {
-	public static class GameStorage {
-		private static Dictionary <string, Type> types = new Dictionary <string, Type> ();
-
-
-
-		static GameStorage () {
-			//actions
-			GameStorage.types.Add ("LogicText", typeof (LogicText));
-			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
-			GameStorage.types.Add ("LogicGlobalResourceSet", typeof (LogicGlobalResourceSet));
-			GameStorage.types.Add ("LogicGlobalResourceModify", typeof (LogicGlobalResourceModify));
-
-			//flows
-			GameStorage.types.Add ("LogicList", typeof (LogicList));
-			GameStorage.types.Add ("LogicOption", typeof (LogicOption));
-			GameStorage.types.Add ("LogicOptionList", typeof (LogicOptionList));
-			GameStorage.types.Add ("LogicBackUpOptionList", typeof (LogicBackUpOptionList));
-			GameStorage.types.Add ("LogicLoop", typeof (LogicLoop));
-			GameStorage.types.Add ("LogicLoopBreak", typeof (LogicLoopBreak));
-			GameStorage.types.Add ("LogicLoopContinue", typeof (LogicLoopContinue));
-			GameStorage.types.Add ("LogicIgnorePoint", typeof (LogicIgnorePoint));
-		}
+	internal static class GameStorage {
+		public static Dictionary <string, Type> types = new Dictionary <string, Type> ();
 
 		public static LogicNode CreateLogic (XmlNode node) {
 			LogicNode logic = (LogicNode) Activator.CreateInstance (GameStorage.types [node.Name], new object [] {node});				

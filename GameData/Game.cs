@@ -1,12 +1,13 @@
 ﻿using AnyGameEngine.CustomVars;
 using AnyGameEngine.Modules.Core;
+using AnyGameEngine.Modules.GlobalResources;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AnyGameEngine.Modules.GlobalResources {
+namespace AnyGameEngine.GameData {
 	public class Game {
 		public string Name;
 		public string Description;

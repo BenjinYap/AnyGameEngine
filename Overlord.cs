@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AnyGameEngine.GameData;
 
 namespace AnyGameEngine {
 	public class Overlord {
@@ -32,6 +33,10 @@ namespace AnyGameEngine {
 			this.modules.Add (this.CoreModule);
 			this.modules.Add (this.GlobalResourcesModule);
 			this.modules.Add (this.ItemsModule);
+		}
+
+		public Game LoadGameFromXml (string xml) {
+			return GameStorage.FromXml (xml);
 		}
 
 		public void SetGameAndSave (Game game, Save save) {

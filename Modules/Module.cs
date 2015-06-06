@@ -1,4 +1,4 @@
-﻿using AnyGameEngine.Modules.GlobalResources;
+﻿using AnyGameEngine.GameData;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
