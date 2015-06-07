@@ -16,17 +16,8 @@ using System.Text;
 using System.Xml;
 
 namespace AnyGameEngine.GameData {
-	internal static class GameStorage {
-		public static Dictionary <string, Type> types = new Dictionary <string, Type> ();
-
-		public static LogicNode CreateLogic (XmlNode node) {
-			if (GameStorage.types.ContainsKey (node.Name) == false) {
-				throw new Exception ("Logic class not found for " + node.Name);
-			}
-
-			LogicNode logic = (LogicNode) Activator.CreateInstance (GameStorage.types [node.Name], new object [] {node});				
-			return logic;
-		}
+	public static class GameStorage {
+		internal static Dictionary <string, Type> types = new Dictionary <string, Type> ();
 
 		public static Game FromXml (string xml) {
 			XmlDocument doc = new XmlDocument ();
@@ -44,6 +35,15 @@ namespace AnyGameEngine.GameData {
 			GameStorage.LoadItems (game, root ["Items"]);
 
 			return game;
+		}
+
+		internal static LogicNode CreateLogic (XmlNode node) {
+			if (GameStorage.types.ContainsKey (node.Name) == false) {
+				throw new Exception ("Logic class not found for " + node.Name);
+			}
+
+			LogicNode logic = (LogicNode) Activator.CreateInstance (GameStorage.types [node.Name], new object [] {node});				
+			return logic;
 		}
 
 		private static void LoadGeneral (Game game, XmlElement node) {
