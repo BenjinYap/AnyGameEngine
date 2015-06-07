@@ -20,6 +20,10 @@ namespace AnyGameEngine.GameData {
 		public static Dictionary <string, Type> types = new Dictionary <string, Type> ();
 
 		public static LogicNode CreateLogic (XmlNode node) {
+			if (GameStorage.types.ContainsKey (node.Name) == false) {
+				throw new Exception ("Logic class not found for " + node.Name);
+			}
+
 			LogicNode logic = (LogicNode) Activator.CreateInstance (GameStorage.types [node.Name], new object [] {node});				
 			return logic;
 		}
