@@ -5,23 +5,28 @@ using AnyGameEngine.Modules.Items;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.GameData {
 	public class Game {
-		public string Name;
+		public string Name { get; set; }
 		public string Description;
 		public string Author;
 		public string StartingRoomId;
 		
-		public List <GlobalResource> GlobalResources = new List <GlobalResource> ();
+		public List <GlobalResource> GlobalResources { get; set; }
 
 		public List <Room> Rooms = new List <Room> ();
 
 		public List <CustomVar> CustomVars = new List <CustomVar> ();
 
 		public List <Item> Items = new List <Item> ();
+
+		public Game () {
+			this.GlobalResources = new List <GlobalResource> ();
+		}
 
 		public Save GetFreshSave () {
 			Save save = new Save ();

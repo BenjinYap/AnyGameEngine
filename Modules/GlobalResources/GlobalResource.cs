@@ -6,6 +6,6 @@ using System.Text;
 namespace AnyGameEngine.Modules.GlobalResources {
 	public class GlobalResource:Entity {
 		public float StartingAmount;
-		public string Name;
+		public string Name {get; set;}
 	}
 }
