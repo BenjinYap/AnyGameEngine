@@ -66,5 +66,14 @@ namespace AnyGameEngine {
 				throw new Exception (currentLogicType.Name + " has no handler");
 			}
 		}
+
+		internal void EnableStep () {
+			this.stepDisabled = false;
+		}
+
+		internal void DisableStep (string exceptionMessage) {
+			this.stepDisabled = true;
+			this.invalidStepExceptionMessage = exceptionMessage;
+		}
 	}
 }

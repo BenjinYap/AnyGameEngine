@@ -35,7 +35,6 @@ namespace AnyGameEngine.Modules.Core {
 		}
 
 		public void SelectOption (int index) {
-			
 			if (this.state != State.OptionList) {
 				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
 			}
@@ -45,6 +44,7 @@ namespace AnyGameEngine.Modules.Core {
 			}
 
 			this.state = State.Action;
+			this.Overlord.EnableStep ();
 			this.Save.CurrentLogic = this.Save.CurrentLogic.Nodes [index].Nodes [0];
 			this.Overlord.Step ();
 		}
@@ -84,6 +84,7 @@ namespace AnyGameEngine.Modules.Core {
 
 		private void DoLogicOptionList () {
 			this.state = State.OptionList;
+			this.Overlord.DisableStep ("can't step in option list state");
 			LogicOptionList optionList = (LogicOptionList) this.Save.CurrentLogic;
 			string [] options = optionList.Nodes.Select (a => ((LogicOption) a).Text).ToArray ();
 
