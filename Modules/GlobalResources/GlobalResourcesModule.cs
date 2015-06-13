@@ -26,7 +26,8 @@ namespace AnyGameEngine.Modules.GlobalResources {
 			this.Save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceSet != null) {
-				this.GlobalResourceSet (this, new LogicGlobalResourceChangeEventArgs (logic.Amount));
+				string resourceName = this.Game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
+				this.GlobalResourceSet (this, new LogicGlobalResourceChangeEventArgs (resourceName, logic.Amount));
 			}
 		}
 
@@ -36,7 +37,8 @@ namespace AnyGameEngine.Modules.GlobalResources {
 			this.Save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceModified != null) {
-				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (logic.Amount));
+				string resourceName = this.Game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
+				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (resourceName, logic.Amount));
 			}
 		}
 
