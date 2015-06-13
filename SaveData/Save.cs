@@ -4,6 +4,7 @@ using AnyGameEngine.Modules.Items;
 using AnyGameEngine.Other;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,7 +19,7 @@ namespace AnyGameEngine.SaveData {
 
 		public ObservableDictionary <string, float> GlobalResources = new ObservableDictionary <string, float> ();
 
-		public List <ItemStack> ItemStacks = new List <ItemStack> ();
+		public ObservableCollection <ItemStack> ItemStacks = new ObservableCollection <ItemStack> ();
 
 		private void NotifyPropertyChanged ([CallerMemberName] string propertyName = null) {
 			if (this.PropertyChanged != null) {
