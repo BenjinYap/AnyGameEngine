@@ -19,7 +19,11 @@ namespace AnyGameEngine.SaveData {
 
 		public ObservableDictionary <string, float> GlobalResources = new ObservableDictionary <string, float> ();
 
-		public ObservableCollection <ItemStack> ItemStacks = new ObservableCollection <ItemStack> ();
+		public ObservableCollection <ItemStack> ItemStacks { get; set; }
+
+		public Save () {
+			this.ItemStacks = new ObservableCollection <ItemStack> ();
+		}
 
 		private void NotifyPropertyChanged ([CallerMemberName] string propertyName = null) {
 			if (this.PropertyChanged != null) {

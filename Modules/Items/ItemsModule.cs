@@ -18,6 +18,7 @@ namespace AnyGameEngine.Modules.Items {
 
 		private void DoLogicItemModify () {
 			LogicItemModify logic = (LogicItemModify) this.Save.CurrentLogic;
+			this.Save.CurrentLogic = logic.GetNextLogic ();
 			Item item = this.Game.Items.Find (a => a.Id == logic.ItemId);
 			int remaining = logic.Quantity;
 
