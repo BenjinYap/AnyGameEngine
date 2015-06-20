@@ -20,9 +20,10 @@ namespace AnyGameEngine.Modules.Items {
 			LogicItemModify logic = (LogicItemModify) this.Save.CurrentLogic;
 			this.Save.CurrentLogic = logic.GetNextLogic ();
 			Item item = this.Game.Items.Find (a => a.Id == logic.ItemId);
-			int remaining = logic.Quantity;
-
+			
 			if (logic.Quantity < 0) {
+				int remaining = logic.Quantity * -1;
+
 				while (remaining > 0) {
 					int index = this.Save.ItemStacks.FindIndex (a => a.ItemId == logic.ItemId);
 
@@ -33,15 +34,16 @@ namespace AnyGameEngine.Modules.Items {
 						if (stack.Quantity <= 0) {
 							this.Save.ItemStacks.RemoveAt (index);
 						}
-
+						
 						break;
 					}
 				}
-
+				
 				if (this.ItemModify != null) {
 					this.ItemModify (this, new LogicItemModifyEventArgs (item.Name, logic.Quantity));
 				}
 			} else if (logic.Quantity > 0) {
+				int remaining = logic.Quantity;
 				ItemStack stack = this.Save.ItemStacks.Find (a => a.ItemId == logic.ItemId);
 
 				if (stack == null) {
