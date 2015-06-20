@@ -34,6 +34,7 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		private void DoLogicGlobalResourceModify () {
 			LogicGlobalResourceModify logic = (LogicGlobalResourceModify) this.Save.CurrentLogic;
 			this.Save.GlobalResources [logic.ResourceId] += logic.Amount;
+			this.Save.GlobalResources [logic.ResourceId] = this.Save.GlobalResources [logic.ResourceId] < 0 ? 0 : this.Save.GlobalResources [logic.ResourceId];
 			this.Save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceModified != null) {
