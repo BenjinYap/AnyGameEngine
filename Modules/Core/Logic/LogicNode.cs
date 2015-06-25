@@ -24,6 +24,10 @@ namespace AnyGameEngine.Modules.Core.Logic {
 
 			this.Nodes = new List <LogicNode> ();
 
+			if (this is LogicList == false) {
+				return;
+			}
+
 			//create the child nodes
 			for (int i = 0; i < node.ChildNodes.Count; i++) {
 				LogicNode logic = GameStorage.CreateLogic (node.ChildNodes [i]);
