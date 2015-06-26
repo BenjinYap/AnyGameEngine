@@ -42,6 +42,9 @@
     <Compile Include="Modules\Expressions\Constant.cs" />
     <Compile Include="Modules\Expressions\Expression.cs" />
     <Compile Include="Modules\Expressions\ExpressionToken.cs" />
+    <Compile Include="Modules\Expressions\ExpressionsModule.cs" />
+    <Compile Include="Modules\Expressions\Functions\Concatenate.cs" />
+    <Compile Include="Modules\Expressions\Functions\Function.cs" />
     <Compile Include="Modules\Expressions\IEvaluate.cs" />
     <Compile Include="Modules\GlobalResources\GlobalResourcesModule.cs" />
     <Compile Include="Modules\GlobalResources\GlobalResourcesModule.EventArgs.cs" />
@@ -81,9 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData\Save.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\Expressions\Operators\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,19 +1,31 @@
-﻿using System;
+﻿using AnyGameEngine.Modules.Expressions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml;
 
 namespace AnyGameEngine.Modules.Core.Logic.Actions {
 	public class LogicText:LogicNode {
-		public string Text;
+		public IEvaluate Text;
 
 		public LogicText () {
-
+			
 		}
 
 		public LogicText (XmlNode node):base (node) {
-			this.Text = node.Attributes ["text"].Value;
+			XmlAttribute text = node.Attributes ["text"];
+
+			if (text != null) {
+				if (node.ChildNodes.Count > 0) {
+					throw new Exception ("Cannot define both text attribute and expression");
+				}
+
+				this.Text = new Constant (text.Value);
+			} else {
+				this.Text = new Expression (node.ChildNodes [0]);
+			}
 		}
 
 		public override LogicNode Clone (LogicNode parent) {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.Expressions;
 
 namespace AnyGameEngine {
 	public class Overlord {
@@ -33,6 +34,7 @@ namespace AnyGameEngine {
 			this.modules.Add (this.CoreModule);
 			this.modules.Add (this.GlobalResourcesModule);
 			this.modules.Add (this.ItemsModule);
+			this.modules.Add (new ExpressionsModule (this));
 		}
 
 		public Game LoadGameFromXml (string xml) {

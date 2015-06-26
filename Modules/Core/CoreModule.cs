@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.Expressions;
 
 namespace AnyGameEngine.Modules.Core {
 	public class CoreModule:Module {
@@ -121,7 +122,7 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		private void DoLogicText () {
-			string text = ((LogicText) this.Save.CurrentLogic).Text;
+			string text = ((LogicText) this.Save.CurrentLogic).Text.Evaluate ();
 			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
 			
 			if (this.Texted != null) {
