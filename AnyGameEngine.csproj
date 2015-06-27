@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Core\ExpressionTokens\RoomValue.cs" />
     <Compile Include="Modules\Expressions\Constant.cs" />
     <Compile Include="Modules\Expressions\Expression.cs" />
     <Compile Include="Modules\Expressions\ExpressionToken.cs" />
