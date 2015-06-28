@@ -58,17 +58,17 @@ namespace AnyGameEngine.GameData {
 		}
 
 		public LogicNode CreateLogic (XmlNode node, Overlord overlord) {
-			if (overlord.Types.ContainsKey (node.Name) == false) {
+			if (overlord.LogicConstructorInfos.ContainsKey (node.Name) == false) {
 				throw new Exception ("Logic class not found for " + node.Name);
 			}
 
 			List <object> args = new List <Object> {node};
 
-			if (overlord.Types [node.Name].ContainsExpressions) {
-				//args.Add (
+			if (overlord.LogicConstructorInfos [node.Name].ContainsExpressions) {
+				args.Add (overlord.ExpressionConstructorInfos);
 			}
 
-			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.Types [node.Name].Type, args.ToArray ());
+			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.LogicConstructorInfos [node.Name].Type, args.ToArray ());
 
 			if (logic is LogicList) {
 				//create the child nodes

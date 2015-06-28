@@ -17,7 +17,8 @@ namespace AnyGameEngine {
 		public ItemsModule ItemsModule;
 
 		internal Dictionary <Type, Action> LogicHandlers = new Dictionary <Type, Action> ();
-		internal Dictionary <string, LogicConstructorInfo> Types = new Dictionary <string, LogicConstructorInfo> ();
+		internal Dictionary <string, LogicConstructorInfo> LogicConstructorInfos = new Dictionary <string, LogicConstructorInfo> ();
+		internal Dictionary <string, ExpressionConstructorInfo> ExpressionConstructorInfos = new Dictionary <string, ExpressionConstructorInfo> ();
 
 		private List <Module> modules = new List <Module> ();
 

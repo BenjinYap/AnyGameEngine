@@ -34,17 +34,17 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
 
-			overlord.Types.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), false));
-			overlord.Types.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false));
+			overlord.LogicConstructorInfos.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), true));
+			overlord.LogicConstructorInfos.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false));
 
-			overlord.Types.Add ("LogicList", new LogicConstructorInfo (typeof (LogicList), false));
-			overlord.Types.Add ("LogicOption", new LogicConstructorInfo (typeof (LogicOption), false));
-			overlord.Types.Add ("LogicOptionList", new LogicConstructorInfo (typeof (LogicOptionList), false));
-			overlord.Types.Add ("LogicBackUpOptionList", new LogicConstructorInfo (typeof (LogicBackUpOptionList), false));
-			overlord.Types.Add ("LogicLoop", new LogicConstructorInfo (typeof (LogicLoop), false));
-			overlord.Types.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false));
-			overlord.Types.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false));
-			overlord.Types.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false));
+			overlord.LogicConstructorInfos.Add ("LogicList", new LogicConstructorInfo (typeof (LogicList), false));
+			overlord.LogicConstructorInfos.Add ("LogicOption", new LogicConstructorInfo (typeof (LogicOption), false));
+			overlord.LogicConstructorInfos.Add ("LogicOptionList", new LogicConstructorInfo (typeof (LogicOptionList), false));
+			overlord.LogicConstructorInfos.Add ("LogicBackUpOptionList", new LogicConstructorInfo (typeof (LogicBackUpOptionList), false));
+			overlord.LogicConstructorInfos.Add ("LogicLoop", new LogicConstructorInfo (typeof (LogicLoop), false));
+			overlord.LogicConstructorInfos.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false));
+			overlord.LogicConstructorInfos.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false));
+			overlord.LogicConstructorInfos.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false));
 		}
 
 		public void SelectOption (int index) {

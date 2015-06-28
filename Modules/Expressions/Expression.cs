@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnyGameEngine.Modules.Expressions.Functions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,14 +14,29 @@ namespace AnyGameEngine.Modules.Expressions {
 			
 		}
 
-		public Expression (XmlNode node) {
+		public Expression (XmlNode node, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos) {
 			for (int i = 0; i < node.ChildNodes.Count; i++) {
-				tokens.Add (ExpressionToken.FromXml (node.ChildNodes [i]));
+				XmlNode childNode = node.ChildNodes [i];
+				ExpressionToken token = CreateExpressionToken (childNode, expressionConstructorInfos);
+
+				if (token is Function) {
+					Function func = (Function) token;
+
+					for (int j = 0; j < childNode.ChildNodes.Count; j++) {
+						func.Tokens.Add (CreateExpressionToken (childNode.ChildNodes [j], expressionConstructorInfos));
+					}
+				}
+
+				tokens.Add (token);
 			}
 		}
 
 		public string Evaluate () {
 			return tokens [0].Evaluate ();
+		}
+
+		private ExpressionToken CreateExpressionToken (XmlNode node, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos) {
+			return (ExpressionToken) Activator.CreateInstance (expressionConstructorInfos [node.Name].Type, new object [] {node});
 		}
 	}
 }

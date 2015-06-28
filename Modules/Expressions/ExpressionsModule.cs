@@ -5,13 +5,9 @@ namespace AnyGameEngine.Modules.Expressions {
 	public class ExpressionsModule:Module {
 		
 		public ExpressionsModule (Overlord overlord):base (overlord) {
+			overlord.ExpressionConstructorInfos.Add ("Constant", new ExpressionConstructorInfo (typeof (Constant)));
 
-		}
-
-		static ExpressionsModule () {
-			ExpressionToken.Types.Add ("Constant", typeof (Constant));
-
-			ExpressionToken.Types.Add ("Concatenate", typeof (Concatenate));
+			overlord.ExpressionConstructorInfos.Add ("Concatenate", new ExpressionConstructorInfo (typeof (Concatenate)));
 		}
 	}
 }

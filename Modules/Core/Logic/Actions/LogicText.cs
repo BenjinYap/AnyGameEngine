@@ -14,7 +14,7 @@ namespace AnyGameEngine.Modules.Core.Logic.Actions {
 			
 		}
 
-		public LogicText (XmlNode node):base (node) {
+		public LogicText (XmlNode node, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos):base (node) {
 			XmlAttribute text = node.Attributes ["text"];
 
 			if (text != null) {
@@ -24,7 +24,7 @@ namespace AnyGameEngine.Modules.Core.Logic.Actions {
 
 				this.Text = new Constant (text.Value);
 			} else {
-				this.Text = new Expression (node.ChildNodes [0]);
+				this.Text = new Expression (node.ChildNodes [0], expressionConstructorInfos);
 			}
 		}
 

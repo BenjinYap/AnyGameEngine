@@ -15,7 +15,7 @@ namespace AnyGameEngine.Modules.Items {
 		public ItemsModule (Overlord overlord):base (overlord) {
 			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
 
-			overlord.Types.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false));
+			overlord.LogicConstructorInfos.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false));
 		}
 
 		private void DoLogicItemModify () {
