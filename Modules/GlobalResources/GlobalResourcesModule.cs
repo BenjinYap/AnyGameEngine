@@ -18,6 +18,9 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		public GlobalResourcesModule (Overlord overlord):base (overlord) {
 			overlord.LogicHandlers [typeof (LogicGlobalResourceSet)] = DoLogicGlobalResourceSet;
 			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
+
+			overlord.Types.Add ("LogicGlobalResourceSet", new LogicConstructorInfo (typeof (LogicGlobalResourceSet), false));
+			overlord.Types.Add ("LogicGlobalResourceModify", new LogicConstructorInfo (typeof (LogicGlobalResourceModify), false));
 		}
 
 		private void DoLogicGlobalResourceSet () {
@@ -41,11 +44,6 @@ namespace AnyGameEngine.Modules.GlobalResources {
 				string resourceName = this.Game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
 				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (resourceName, logic.Amount));
 			}
-		}
-
-		static GlobalResourcesModule () {
-			GameStorage.types.Add ("LogicGlobalResourceSet", typeof (LogicGlobalResourceSet));
-			GameStorage.types.Add ("LogicGlobalResourceModify", typeof (LogicGlobalResourceModify));
 		}
 	}
 }

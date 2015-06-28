@@ -14,6 +14,8 @@ namespace AnyGameEngine.Modules.Items {
 
 		public ItemsModule (Overlord overlord):base (overlord) {
 			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
+
+			overlord.Types.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false));
 		}
 
 		private void DoLogicItemModify () {
@@ -57,10 +59,6 @@ namespace AnyGameEngine.Modules.Items {
 					this.ItemModify (this, new LogicItemModifyEventArgs (item.Name, logic.Quantity));
 				}
 			}
-		}
-
-		static ItemsModule () {
-			GameStorage.types.Add ("LogicItemModify", typeof (LogicItemModify));
 		}
 	}
 }

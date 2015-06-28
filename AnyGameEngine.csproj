@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogicConstructorInfo.cs" />
     <Compile Include="Modules\Core\ExpressionTokens\RoomValue.cs" />
     <Compile Include="Modules\Expressions\Constant.cs" />
     <Compile Include="Modules\Expressions\Expression.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Modules\Items\Item.cs" />
     <Compile Include="Modules\Core\Room.cs" />
     <Compile Include="GameData\Game.cs" />
-    <Compile Include="GameData\GameStorage.cs" />
     <Compile Include="Modules\Items\ItemStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData\Save.cs" />

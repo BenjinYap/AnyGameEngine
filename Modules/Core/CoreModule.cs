@@ -33,6 +33,18 @@ namespace AnyGameEngine.Modules.Core {
 
 			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
+
+			overlord.Types.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), false));
+			overlord.Types.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false));
+
+			overlord.Types.Add ("LogicList", new LogicConstructorInfo (typeof (LogicList), false));
+			overlord.Types.Add ("LogicOption", new LogicConstructorInfo (typeof (LogicOption), false));
+			overlord.Types.Add ("LogicOptionList", new LogicConstructorInfo (typeof (LogicOptionList), false));
+			overlord.Types.Add ("LogicBackUpOptionList", new LogicConstructorInfo (typeof (LogicBackUpOptionList), false));
+			overlord.Types.Add ("LogicLoop", new LogicConstructorInfo (typeof (LogicLoop), false));
+			overlord.Types.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false));
+			overlord.Types.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false));
+			overlord.Types.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false));
 		}
 
 		public void SelectOption (int index) {
@@ -186,17 +198,7 @@ namespace AnyGameEngine.Modules.Core {
 		private enum State { Action, OptionList };
 
 		static CoreModule () {
-			GameStorage.types.Add ("LogicText", typeof (LogicText));
-			GameStorage.types.Add ("LogicRoomChange", typeof (LogicRoomChange));
-
-			GameStorage.types.Add ("LogicList", typeof (LogicList));
-			GameStorage.types.Add ("LogicOption", typeof (LogicOption));
-			GameStorage.types.Add ("LogicOptionList", typeof (LogicOptionList));
-			GameStorage.types.Add ("LogicBackUpOptionList", typeof (LogicBackUpOptionList));
-			GameStorage.types.Add ("LogicLoop", typeof (LogicLoop));
-			GameStorage.types.Add ("LogicLoopBreak", typeof (LogicLoopBreak));
-			GameStorage.types.Add ("LogicLoopContinue", typeof (LogicLoopContinue));
-			GameStorage.types.Add ("LogicIgnorePoint", typeof (LogicIgnorePoint));
+			
 		}
 	}
 }

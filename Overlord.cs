@@ -17,6 +17,7 @@ namespace AnyGameEngine {
 		public ItemsModule ItemsModule;
 
 		internal Dictionary <Type, Action> LogicHandlers = new Dictionary <Type, Action> ();
+		internal Dictionary <string, LogicConstructorInfo> Types = new Dictionary <string, LogicConstructorInfo> ();
 
 		private List <Module> modules = new List <Module> ();
 
@@ -35,10 +36,6 @@ namespace AnyGameEngine {
 			this.modules.Add (this.GlobalResourcesModule);
 			this.modules.Add (this.ItemsModule);
 			this.modules.Add (new ExpressionsModule (this));
-		}
-
-		public Game LoadGameFromXml (string xml) {
-			return GameStorage.FromXml (xml);
 		}
 
 		public void SetGameAndSave (Game game, Save save) {

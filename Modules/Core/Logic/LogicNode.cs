@@ -23,21 +23,6 @@ namespace AnyGameEngine.Modules.Core.Logic {
 			this.Id = attrs ["id"] == null ? "" : attrs ["id"].Value;
 
 			this.Nodes = new List <LogicNode> ();
-
-			if (this is LogicList == false) {
-				return;
-			}
-
-			//create the child nodes
-			for (int i = 0; i < node.ChildNodes.Count; i++) {
-				LogicNode logic = GameStorage.CreateLogic (node.ChildNodes [i]);
-				this.Nodes.Add (logic);
-				
-				if (i > 0) {
-					this.Nodes [i].Prev = this.Nodes [i - 1];
-					this.Nodes [i - 1].Next = this.Nodes [i];
-				}
-			}
 		}
 
 		public virtual LogicNode Clone (LogicNode parent) {
