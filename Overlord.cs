@@ -37,6 +37,12 @@ namespace AnyGameEngine {
 			this.modules.Add (this.GlobalResourcesModule);
 			this.modules.Add (this.ItemsModule);
 			this.modules.Add (new ExpressionsModule (this));
+
+			this.modules.ForEach (a => {
+				a.RegisterLogicConstructors (this);
+				a.RegisterExpressionConstructors (this);
+				a.RegisterLogicHandlers (this);
+			});
 		}
 
 		public void SetGameAndSave (Game game, Save save) {

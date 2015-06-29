@@ -13,9 +13,15 @@ namespace AnyGameEngine.Modules.Items {
 		public event LogicItemModifyEventHandler ItemModify;
 
 		public ItemsModule (Overlord overlord):base (overlord) {
-			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
+			
+		}
 
+		public override void RegisterLogicConstructors (Overlord overlord) {
 			overlord.LogicConstructorInfos.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false));
+		}
+
+		public override void RegisterLogicHandlers (Overlord overlord) {
+			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
 		}
 
 		private void DoLogicItemModify () {

@@ -16,6 +16,18 @@ namespace AnyGameEngine.Modules {
 			this.Overlord = overlord;
 		}
 
+		public virtual void RegisterLogicHandlers (Overlord overlord) {
+
+		}
+
+		public virtual void RegisterLogicConstructors (Overlord overlord) {
+
+		}
+
+		public virtual void RegisterExpressionConstructors (Overlord overlord) {
+
+		}
+
 		public void SetGame (Game game) {
 			this.Game = game;
 		}

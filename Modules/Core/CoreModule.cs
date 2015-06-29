@@ -25,15 +25,10 @@ namespace AnyGameEngine.Modules.Core {
 		private State state = State.Action;
 		
 		public CoreModule (Overlord overlord):base (overlord) {
-			overlord.LogicHandlers [typeof (LogicList)] = DoLogicList;
-			overlord.LogicHandlers [typeof (LogicLoop)] = DoLogicLoop;
-			overlord.LogicHandlers [typeof (LogicLoopContinue)] = DoLogicLoopContinue;
-			overlord.LogicHandlers [typeof (LogicLoopBreak)] = DoLogicLoopBreak;
-			overlord.LogicHandlers [typeof (LogicOptionList)] = DoLogicOptionList;
+			
+		}
 
-			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
-			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
-
+		public override void RegisterLogicConstructors (Overlord overlord) {
 			overlord.LogicConstructorInfos.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), true));
 			overlord.LogicConstructorInfos.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false));
 
@@ -45,6 +40,17 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicConstructorInfos.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false));
 			overlord.LogicConstructorInfos.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false));
 			overlord.LogicConstructorInfos.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false));
+		}
+
+		public override void RegisterLogicHandlers (Overlord overlord) {
+			overlord.LogicHandlers [typeof (LogicList)] = DoLogicList;
+			overlord.LogicHandlers [typeof (LogicLoop)] = DoLogicLoop;
+			overlord.LogicHandlers [typeof (LogicLoopContinue)] = DoLogicLoopContinue;
+			overlord.LogicHandlers [typeof (LogicLoopBreak)] = DoLogicLoopBreak;
+			overlord.LogicHandlers [typeof (LogicOptionList)] = DoLogicOptionList;
+
+			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
+			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
 		}
 
 		public void SelectOption (int index) {

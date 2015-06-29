@@ -16,11 +16,17 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		public event LogicGlobalResourceModifyEventHandler GlobalResourceModified;
 
 		public GlobalResourcesModule (Overlord overlord):base (overlord) {
-			overlord.LogicHandlers [typeof (LogicGlobalResourceSet)] = DoLogicGlobalResourceSet;
-			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
+			
+		}
 
+		public override void RegisterLogicConstructors (Overlord overlord) {
 			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceSet", new LogicConstructorInfo (typeof (LogicGlobalResourceSet), false));
 			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceModify", new LogicConstructorInfo (typeof (LogicGlobalResourceModify), false));
+		}
+
+		public override void RegisterLogicHandlers (Overlord overlord) {
+			overlord.LogicHandlers [typeof (LogicGlobalResourceSet)] = DoLogicGlobalResourceSet;
+			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
 		}
 
 		private void DoLogicGlobalResourceSet () {
