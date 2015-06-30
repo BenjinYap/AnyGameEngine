@@ -1,5 +1,7 @@
-﻿namespace AnyGameEngine.Modules.Expressions {
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.SaveData;
+namespace AnyGameEngine.Modules.Expressions {
 	public interface IEvaluate {
-		string Evaluate ();
+		string Evaluate (Game game, Save save);
 	}
 }

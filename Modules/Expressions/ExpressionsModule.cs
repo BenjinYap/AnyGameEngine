@@ -9,9 +9,9 @@ namespace AnyGameEngine.Modules.Expressions {
 		}
 
 		public override void RegisterExpressionConstructors (Overlord overlord) {
-			overlord.ExpressionConstructorInfos.Add ("Constant", new ExpressionConstructorInfo (typeof (Constant)));
+			overlord.ExpressionConstructorInfos.Add ("Constant", new ExpressionConstructorInfo (typeof (Constant), false));
 
-			overlord.ExpressionConstructorInfos.Add ("Concatenate", new ExpressionConstructorInfo (typeof (Concatenate)));
+			overlord.ExpressionConstructorInfos.Add ("Concatenate", new ExpressionConstructorInfo (typeof (Concatenate), false));
 		}
 	}
 }

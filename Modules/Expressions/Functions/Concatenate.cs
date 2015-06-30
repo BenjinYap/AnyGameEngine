@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.SaveData;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,9 +15,9 @@ namespace AnyGameEngine.Modules.Expressions.Functions {
 			
 		}
 
-		public override string Evaluate () {
+		public override string Evaluate (Game game, Save save) {
 			string s = "";
-			this.Tokens.ForEach (a => s = s += a.Evaluate ());
+			this.Tokens.ForEach (a => s = s += a.Evaluate (game, save));
 			return s;
 		}
 	}

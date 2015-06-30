@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Expressions;
+using AnyGameEngine.Modules.Core.ExpressionTokens;
 
 namespace AnyGameEngine.Modules.Core {
 	public class CoreModule:Module {
@@ -51,6 +52,10 @@ namespace AnyGameEngine.Modules.Core {
 
 			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
+		}
+
+		public override void RegisterExpressionConstructors (Overlord overlord) {
+			overlord.ExpressionConstructorInfos.Add ("RoomValue", new ExpressionConstructorInfo (typeof (RoomValue), true));
 		}
 
 		public void SelectOption (Game game, Save save, int index) {
@@ -140,7 +145,7 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		private void DoLogicText (Game game, Save save) {
-			string text = ((LogicText) save.CurrentLogic).Text.Evaluate ();
+			string text = ((LogicText) save.CurrentLogic).Text.Evaluate (game, save);
 			save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
 			
 			if (this.Texted != null) {

@@ -1,6 +1,8 @@
 ﻿
 
+using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Expressions;
+using AnyGameEngine.SaveData;
 using System;
 using System.Xml;
 namespace AnyGameEngine.Modules.Core.ExpressionTokens {
@@ -14,12 +16,14 @@ namespace AnyGameEngine.Modules.Core.ExpressionTokens {
 			this.property = (Property) Enum.Parse (typeof (Property), attrs ["property"].Value);
 		}
 
-		public override string Evaluate () {
-			if (this.property == Property.Name) {
+		public override string Evaluate (Game game, Save save) {
+			Room room = game.Rooms.Find (a => a.Id == this.id);
 
+			if (this.property == Property.Name) {
+				return room.Name;
 			}
 
-			return "1";
+			return null;
 		}
 
 		public enum Property { Name };

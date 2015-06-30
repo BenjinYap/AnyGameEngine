@@ -1,4 +1,6 @@
-﻿using AnyGameEngine.Modules.Expressions.Functions;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.Expressions.Functions;
+using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,8 +33,8 @@ namespace AnyGameEngine.Modules.Expressions {
 			}
 		}
 
-		public string Evaluate () {
-			return tokens [0].Evaluate ();
+		public string Evaluate (Game game, Save save) {
+			return tokens [0].Evaluate (game, save);
 		}
 
 		private ExpressionToken CreateExpressionToken (XmlNode node, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos) {

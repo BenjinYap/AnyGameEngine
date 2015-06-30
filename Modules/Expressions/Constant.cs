@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnyGameEngine.GameData;
+using AnyGameEngine.SaveData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,7 @@ namespace AnyGameEngine.Modules.Expressions {
 			this.value = node.Attributes ["value"].Value;
 		}
 
-		public override string Evaluate () {
+		public override string Evaluate (Game game, Save save) {
 			return this.value;
 		}
 	}
