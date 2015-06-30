@@ -53,58 +53,58 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
 		}
 
-		public void SelectOption (int index) {
+		public void SelectOption (Game game, Save save, int index) {
 			if (this.state != State.OptionList) {
 				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
 			}
 
-			if (index < 0 || index > this.Save.CurrentLogic.Nodes.Count - 1) {
+			if (index < 0 || index > save.CurrentLogic.Nodes.Count - 1) {
 				throw new Exception ("Option index out of bounds.");
 			}
 
 			this.state = State.Action;
 			this.Overlord.EnableStep ();
-			this.Save.CurrentLogic = this.Save.CurrentLogic.Nodes [index].Nodes [0];
-			this.Overlord.Step ();
+			save.CurrentLogic = save.CurrentLogic.Nodes [index].Nodes [0];
+			this.Overlord.Step (game, save);
 		}
 		
-		private void DoLogicList () {
-			this.Save.CurrentLogic = this.Save.CurrentLogic.Nodes [0];
-			this.Overlord.Step ();
+		private void DoLogicList (Game game, Save save) {
+			save.CurrentLogic = save.CurrentLogic.Nodes [0];
+			this.Overlord.Step (game, save);
 		}
 
-		private void DoLogicLoop () {
-			LogicLoop loop = (LogicLoop) this.Save.CurrentLogic;
+		private void DoLogicLoop (Game game, Save save) {
+			LogicLoop loop = (LogicLoop) save.CurrentLogic;
 			int repeat = loop.Repeat;
 			int count = loop.Count;
 
 			if (count < repeat) {
 				loop.Count++;
-				this.Save.CurrentLogic = loop.Nodes [0];
+				save.CurrentLogic = loop.Nodes [0];
 			} else {
 				loop.Count = 0;
-				this.Save.CurrentLogic = loop.GetNextLogic ();
+				save.CurrentLogic = loop.GetNextLogic ();
 			}
 
-			this.Overlord.Step ();
+			this.Overlord.Step (game, save);
 		}
 
-		private void DoLogicLoopContinue () {
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetParentByType (typeof (LogicLoop));
-			this.Overlord.Step ();
+		private void DoLogicLoopContinue (Game game, Save save) {
+			save.CurrentLogic = save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+			this.Overlord.Step (game, save);
 		}
 
-		private void DoLogicLoopBreak () {
-			LogicLoop loop = (LogicLoop) this.Save.CurrentLogic.GetParentByType (typeof (LogicLoop));
+		private void DoLogicLoopBreak (Game game, Save save) {
+			LogicLoop loop = (LogicLoop) save.CurrentLogic.GetParentByType (typeof (LogicLoop));
 			loop.Count = 0;
-			this.Save.CurrentLogic = loop.GetNextLogic ();
-			this.Overlord.Step ();
+			save.CurrentLogic = loop.GetNextLogic ();
+			this.Overlord.Step (game, save);
 		}
 
-		private void DoLogicOptionList () {
+		private void DoLogicOptionList (Game game, Save save) {
 			this.state = State.OptionList;
 			this.Overlord.DisableStep ("can't step in option list state");
-			LogicOptionList optionList = (LogicOptionList) this.Save.CurrentLogic;
+			LogicOptionList optionList = (LogicOptionList) save.CurrentLogic;
 			string [] options = optionList.Nodes.Select (a => ((LogicOption) a).Text).ToArray ();
 
 			if (this.OptionListed != null) {
@@ -112,9 +112,9 @@ namespace AnyGameEngine.Modules.Core {
 			}
 		}
 
-		private void DoLogicBackUpOptionList () {
-			int times = ((LogicBackUpOptionList) this.Save.CurrentLogic).Times;
-			LogicNode logic = this.Save.CurrentLogic;
+		private void DoLogicBackUpOptionList (Game game, Save save) {
+			int times = ((LogicBackUpOptionList) save.CurrentLogic).Times;
+			LogicNode logic = save.CurrentLogic;
 
 			for (var i = 0; i < times; i++) {
 				while (true) {
@@ -130,36 +130,36 @@ namespace AnyGameEngine.Modules.Core {
 				}
 			}
 
-			this.Save.CurrentLogic = logic;
-			this.Overlord.Step ();
+			save.CurrentLogic = logic;
+			this.Overlord.Step (game, save);
 		}
 
-		private void DoLogicIgnorePoint () {
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
-			this.Overlord.Step ();
+		private void DoLogicIgnorePoint (Game game, Save save) {
+			save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
+			this.Overlord.Step (game, save);
 		}
 		
-		private void DoLogicText () {
-			string text = ((LogicText) this.Save.CurrentLogic).Text.Evaluate ();
-			this.Save.CurrentLogic = this.Save.CurrentLogic.GetNextLogic ();
+		private void DoLogicText (Game game, Save save) {
+			string text = ((LogicText) save.CurrentLogic).Text.Evaluate ();
+			save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
 			
 			if (this.Texted != null) {
 				this.Texted (this, new LogicTextEventArgs (text));
 			}
 		}
 
-		private void DoLogicRoomChange () {
+		private void DoLogicRoomChange (Game game, Save save) {
 			//get the zone to change to
-			string newRoomId = ((LogicRoomChange) this.Save.CurrentLogic).RoomId;
-			Room room = this.Game.Rooms.Find (a => a.Id == newRoomId);
+			string newRoomId = ((LogicRoomChange) save.CurrentLogic).RoomId;
+			Room room = game.Rooms.Find (a => a.Id == newRoomId);
 			
 			//get the logic after the logiczonechange
-			LogicNode nextLogic = this.Save.CurrentLogic.GetNextLogic ();
+			LogicNode nextLogic = save.CurrentLogic.GetNextLogic ();
 
 			//if there is no logic after the logiczonechange or the next logic is an ignore
 			if (nextLogic == null || nextLogic is LogicIgnorePoint) {
 				//set the new current logic to the first logic of the new zone
-				this.Save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
+				save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
 			} else {  //if there is logic after the logiczonechange
 				//the first logic in the new chain
 				LogicNode newCurrentLogic = nextLogic.Clone (null);
@@ -193,7 +193,7 @@ namespace AnyGameEngine.Modules.Core {
 				prevLogicNew.Next.Prev = prevLogicNew;
 
 				//finally set the new logic
-				this.Save.CurrentLogic = newCurrentLogic;
+				save.CurrentLogic = newCurrentLogic;
 			}
 
 			if (this.RoomChanged != null) {
@@ -201,10 +201,8 @@ namespace AnyGameEngine.Modules.Core {
 			}
 		}
 		
-		private enum State { Action, OptionList };
+		//private const string state = "coremodule.state";
 
-		static CoreModule () {
-			
-		}
+		private enum State { Action, OptionList };
 	}
 }

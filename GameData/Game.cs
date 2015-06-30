@@ -28,6 +28,8 @@ namespace AnyGameEngine.GameData {
 
 		public List <Item> Items = new List <Item> ();
 
+		public Dictionary <string, object> ModuleVars = new Dictionary <string, object> ();
+
 		public Game (Overlord overlord, string path) {
 			XmlDocument doc = new XmlDocument ();
 			XmlReaderSettings settings = new XmlReaderSettings ();

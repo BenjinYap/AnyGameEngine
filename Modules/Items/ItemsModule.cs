@@ -1,6 +1,7 @@
 ﻿using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Items.Logic.Actions;
 using AnyGameEngine.Other;
+using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,23 +25,23 @@ namespace AnyGameEngine.Modules.Items {
 			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
 		}
 
-		private void DoLogicItemModify () {
-			LogicItemModify logic = (LogicItemModify) this.Save.CurrentLogic;
-			this.Save.CurrentLogic = logic.GetNextLogic ();
-			Item item = this.Game.Items.Find (a => a.Id == logic.ItemId);
+		private void DoLogicItemModify (Game game, Save save) {
+			LogicItemModify logic = (LogicItemModify) save.CurrentLogic;
+			save.CurrentLogic = logic.GetNextLogic ();
+			Item item = game.Items.Find (a => a.Id == logic.ItemId);
 			
 			if (logic.Quantity < 0) {
 				int remaining = logic.Quantity * -1;
 
 				while (remaining > 0) {
-					int index = this.Save.ItemStacks.FindIndex (a => a.ItemId == logic.ItemId);
+					int index = save.ItemStacks.FindIndex (a => a.ItemId == logic.ItemId);
 
 					if (index != -1) {
-						ItemStack stack = this.Save.ItemStacks [index];
+						ItemStack stack = save.ItemStacks [index];
 						stack.Quantity -= remaining;
 
 						if (stack.Quantity <= 0) {
-							this.Save.ItemStacks.RemoveAt (index);
+							save.ItemStacks.RemoveAt (index);
 						}
 						
 						break;
@@ -52,11 +53,11 @@ namespace AnyGameEngine.Modules.Items {
 				}
 			} else if (logic.Quantity > 0) {
 				int remaining = logic.Quantity;
-				ItemStack stack = this.Save.ItemStacks.Find (a => a.ItemId == logic.ItemId);
+				ItemStack stack = save.ItemStacks.Find (a => a.ItemId == logic.ItemId);
 
 				if (stack == null) {
 					stack = new ItemStack (logic.ItemId, logic.Quantity);
-					this.Save.ItemStacks.Add (stack);
+					save.ItemStacks.Add (stack);
 				} else {
 					stack.Quantity += logic.Quantity;
 				}

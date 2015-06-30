@@ -9,9 +9,6 @@ namespace AnyGameEngine.Modules {
 	public class Module {
 		protected Overlord Overlord;
 		
-		protected Game Game;
-		protected Save Save;
-
 		public Module (Overlord overlord) {
 			this.Overlord = overlord;
 		}
@@ -26,14 +23,6 @@ namespace AnyGameEngine.Modules {
 
 		public virtual void RegisterExpressionConstructors (Overlord overlord) {
 
-		}
-
-		public void SetGame (Game game) {
-			this.Game = game;
-		}
-
-		public void SetSave (Save save) {
-			this.Save = save;
 		}
 	}
 }

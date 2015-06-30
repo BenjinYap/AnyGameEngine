@@ -29,25 +29,25 @@ namespace AnyGameEngine.Modules.GlobalResources {
 			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
 		}
 
-		private void DoLogicGlobalResourceSet () {
-			LogicGlobalResourceSet logic = (LogicGlobalResourceSet) this.Save.CurrentLogic;
-			this.Save.GlobalResources [logic.ResourceId] = logic.Amount;
-			this.Save.CurrentLogic = logic.GetNextLogic ();
+		private void DoLogicGlobalResourceSet (Game game, Save save) {
+			LogicGlobalResourceSet logic = (LogicGlobalResourceSet) save.CurrentLogic;
+			save.GlobalResources [logic.ResourceId] = logic.Amount;
+			save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceSet != null) {
-				string resourceName = this.Game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
+				string resourceName = game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
 				this.GlobalResourceSet (this, new LogicGlobalResourceChangeEventArgs (resourceName, logic.Amount));
 			}
 		}
 
-		private void DoLogicGlobalResourceModify () {
-			LogicGlobalResourceModify logic = (LogicGlobalResourceModify) this.Save.CurrentLogic;
-			this.Save.GlobalResources [logic.ResourceId] += logic.Amount;
-			this.Save.GlobalResources [logic.ResourceId] = this.Save.GlobalResources [logic.ResourceId] < 0 ? 0 : this.Save.GlobalResources [logic.ResourceId];
-			this.Save.CurrentLogic = logic.GetNextLogic ();
+		private void DoLogicGlobalResourceModify (Game game, Save save) {
+			LogicGlobalResourceModify logic = (LogicGlobalResourceModify) save.CurrentLogic;
+			save.GlobalResources [logic.ResourceId] += logic.Amount;
+			save.GlobalResources [logic.ResourceId] = save.GlobalResources [logic.ResourceId] < 0 ? 0 : save.GlobalResources [logic.ResourceId];
+			save.CurrentLogic = logic.GetNextLogic ();
 			
 			if (this.GlobalResourceModified != null) {
-				string resourceName = this.Game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
+				string resourceName = game.GlobalResources.Find (a => a.Id == logic.ResourceId).Name;
 				this.GlobalResourceModified (this, new LogicGlobalResourceChangeEventArgs (resourceName, logic.Amount));
 			}
 		}

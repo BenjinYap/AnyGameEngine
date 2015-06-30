@@ -16,14 +16,11 @@ namespace AnyGameEngine {
 		public GlobalResourcesModule GlobalResourcesModule;
 		public ItemsModule ItemsModule;
 
-		internal Dictionary <Type, Action> LogicHandlers = new Dictionary <Type, Action> ();
+		internal Dictionary <Type, Action <Game, Save>> LogicHandlers = new Dictionary <Type, Action <Game, Save>> ();
 		internal Dictionary <string, LogicConstructorInfo> LogicConstructorInfos = new Dictionary <string, LogicConstructorInfo> ();
 		internal Dictionary <string, ExpressionConstructorInfo> ExpressionConstructorInfos = new Dictionary <string, ExpressionConstructorInfo> ();
 
 		private List <Module> modules = new List <Module> ();
-
-		private Game game;
-		private Save save;
 
 		private bool stepDisabled = false;
 		private string invalidStepExceptionMessage = "";
@@ -45,29 +42,19 @@ namespace AnyGameEngine {
 			});
 		}
 
-		public void SetGameAndSave (Game game, Save save) {
-			this.game = game;
-			this.save = save;
-
-			this.modules.ForEach (a => {
-				a.SetGame (this.game);
-				a.SetSave (this.save);
-			});
-		}
-
-		public void Step () {
+		public void Step (Game game, Save save) {
 			if (this.stepDisabled) {
 				throw new Exception (this.invalidStepExceptionMessage);
 			}
 
-			if (this.save.CurrentLogic == null) {
+			if (save.CurrentLogic == null) {
 				return;
 			}
 
-			Type currentLogicType = this.save.CurrentLogic.GetType ();
+			Type currentLogicType = save.CurrentLogic.GetType ();
 
 			if (this.LogicHandlers.ContainsKey (currentLogicType)) {
-				this.LogicHandlers [currentLogicType] ();
+				this.LogicHandlers [currentLogicType] (game, save);
 			} else {
 				throw new Exception (currentLogicType.Name + " has no handler");
 			}
