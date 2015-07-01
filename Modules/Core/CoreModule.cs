@@ -12,6 +12,7 @@ using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Expressions;
 using AnyGameEngine.Modules.Core.ExpressionTokens;
 using System.Xml;
+using AnyGameEngine.Modules.Conditions.Logic.Flow;
 
 namespace AnyGameEngine.Modules.Core {
 	public class CoreModule:Module {
@@ -96,6 +97,12 @@ namespace AnyGameEngine.Modules.Core {
 						logic.Nodes [i - 1].Next = logic.Nodes [i];
 					}
 				}
+			} else if (logic is LogicCondition) {
+				LogicCondition condition = (LogicCondition) logic;
+				XmlNode trueList = node.ChildNodes [1].ChildNodes [0];
+				XmlNode falseList = node.ChildNodes [2].ChildNodes [0];
+				condition.TrueLogicList = (LogicList) CreateLogic (trueList, overlord);
+				condition.FalseLogicList = (LogicList) CreateLogic (falseList, overlord);
 			}
 
 			return logic;
@@ -134,7 +141,12 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		private void DoLogicList (Game game, Save save) {
-			save.CurrentLogic = save.CurrentLogic.Nodes [0];
+			if (save.CurrentLogic.Nodes.Count > 0) {
+				save.CurrentLogic = save.CurrentLogic.Nodes [0];
+			} else {
+				save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
+			}
+
 			this.Overlord.Step (game, save);
 		}
 

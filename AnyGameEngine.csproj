@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="ExpressionConstructorInfo.cs" />
     <Compile Include="LogicConstructorInfo.cs" />
+    <Compile Include="Modules\Conditions\Functions\Compare.cs" />
+    <Compile Include="Modules\Conditions\Logic\Flow\LogicCondition.cs" />
     <Compile Include="Modules\Core\ExpressionTokens\RoomValue.cs" />
     <Compile Include="Modules\CustomVars\CustomVarsModule.cs" />
     <Compile Include="Modules\CustomVars\ExpressionTokens\CustomSingleVarValue.cs" />
@@ -51,6 +53,8 @@
     <Compile Include="Modules\Expressions\Functions\Concatenate.cs" />
     <Compile Include="Modules\Expressions\Functions\Function.cs" />
     <Compile Include="Modules\Expressions\IEvaluate.cs" />
+    <Compile Include="Modules\Conditions\ConditionsModule.cs" />
+    <Compile Include="Modules\Conditions\ConditionsModule.EventArgs.cs" />
     <Compile Include="Modules\GlobalResources\GlobalResourcesModule.cs" />
     <Compile Include="Modules\GlobalResources\GlobalResourcesModule.EventArgs.cs" />
     <Compile Include="Other\Helper.cs" />
