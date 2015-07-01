@@ -1,4 +1,5 @@
 ﻿using AnyGameEngine.GameData;
+using AnyGameEngine.Modules.CustomVars.ExpressionTokens;
 using AnyGameEngine.Other;
 using AnyGameEngine.SaveData;
 using System;
@@ -12,6 +13,10 @@ namespace AnyGameEngine.Modules.CustomVars {
 		
 		public CustomVarsModule (Overlord overlord):base (overlord) {
 			
+		}
+
+		public override void RegisterExpressionConstructors (Overlord overlord) {
+			overlord.ExpressionConstructorInfos.Add ("CustomSingleVarValue", new ExpressionConstructorInfo (typeof (CustomSingleVarValue), true));
 		}
 
 		public override void LoadGame (Game game, Overlord overlord, XmlNode root) {
