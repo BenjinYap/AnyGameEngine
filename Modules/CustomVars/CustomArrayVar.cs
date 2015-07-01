@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Modules.CustomVars {
-	public class CustomArrayVar <T>:CustomVar {
-		public T [] Values;
+	public class CustomArrayVar:CustomVar {
+		public string [] Values;
 
-		public CustomArrayVar (T [] values) {
+		public CustomArrayVar (string [] values) {
 			this.Values = values;
 		}
 	}

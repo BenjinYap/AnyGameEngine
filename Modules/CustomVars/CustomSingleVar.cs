@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace AnyGameEngine.Modules.CustomVars {
-	public class CustomSingleVar <T>:CustomVar {
-		public T Value;
+	public class CustomSingleVar:CustomVar {
+		public string Value;
 
-		public CustomSingleVar (T value) {
+		public CustomSingleVar (string value) {
 			this.Value = value;
 		}
 	}
