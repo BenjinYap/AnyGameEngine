@@ -19,9 +19,22 @@ namespace AnyGameEngine.Modules.Conditions.Functions {
 		public override string Evaluate (Game game, Save save) {
 			string v1 = this.Tokens [0].Evaluate (game, save);
 			string v2 = this.Tokens [1].Evaluate (game, save);
-			return v1.Equals (v2).ToString ();
+
+			if (type == Type.Equals) {
+				return v1.Equals (v2).ToString ();
+			} else if (type == Type.LessThan) {
+				return (float.Parse (v1) < float.Parse (v2)).ToString ();
+			} else if (type == Type.LessThanEquals) {
+				return (float.Parse (v1) <= float.Parse (v2)).ToString ();
+			} else if (type == Type.GreaterThan) {
+				return (float.Parse (v1) > float.Parse (v2)).ToString ();
+			} else if (type == Type.GreaterThanEquals) {
+				return (float.Parse (v1) >= float.Parse (v2)).ToString ();
+			}
+
+			return null;
 		}
 
-		private enum Type { Equals };
+		private enum Type { Equals, LessThan, LessThanEquals, GreaterThan, GreaterThanEquals };
 	}
 }

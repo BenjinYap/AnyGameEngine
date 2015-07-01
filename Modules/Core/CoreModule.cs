@@ -133,7 +133,7 @@ namespace AnyGameEngine.Modules.Core {
 			if (index < 0 || index > save.CurrentLogic.Nodes.Count - 1) {
 				throw new Exception ("Option index out of bounds.");
 			}
-
+			
 			this.state = State.Action;
 			this.Overlord.EnableStep ();
 			save.CurrentLogic = save.CurrentLogic.Nodes [index].Nodes [0];
