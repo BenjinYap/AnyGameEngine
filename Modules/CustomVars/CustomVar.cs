@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AnyGameEngine.CustomVars {
+namespace AnyGameEngine.Modules.CustomVars {
 	public abstract class CustomVar {
 		public string Name;
 	}

@@ -42,6 +42,7 @@
     <Compile Include="ExpressionConstructorInfo.cs" />
     <Compile Include="LogicConstructorInfo.cs" />
     <Compile Include="Modules\Core\ExpressionTokens\RoomValue.cs" />
+    <Compile Include="Modules\CustomVars\CustomVarsModule.cs" />
     <Compile Include="Modules\Expressions\Constant.cs" />
     <Compile Include="Modules\Expressions\Expression.cs" />
     <Compile Include="Modules\Expressions\ExpressionToken.cs" />
@@ -59,9 +60,9 @@
     <Compile Include="Modules\Module.cs" />
     <Compile Include="Other\UniqueList.cs" />
     <Compile Include="Overlord.cs" />
-    <Compile Include="CustomVars\CustomArrayVar.cs" />
-    <Compile Include="CustomVars\CustomSingleVar.cs" />
-    <Compile Include="CustomVars\CustomVar.cs" />
+    <Compile Include="Modules\CustomVars\CustomArrayVar.cs" />
+    <Compile Include="Modules\CustomVars\CustomSingleVar.cs" />
+    <Compile Include="Modules\CustomVars\CustomVar.cs" />
     <Compile Include="Modules\Core\CoreModule.cs" />
     <Compile Include="Modules\Core\CoreModule.EventArgs.cs" />
     <Compile Include="Modules\GlobalResources\Logic\Actions\LogicGlobalResourceModify.cs" />
@@ -86,7 +87,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData\Save.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CustomVars\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

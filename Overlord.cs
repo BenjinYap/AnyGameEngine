@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Expressions;
+using AnyGameEngine.Modules.CustomVars;
 
 namespace AnyGameEngine {
 	public class Overlord {
@@ -34,6 +35,7 @@ namespace AnyGameEngine {
 			this.Modules.Add (this.GlobalResourcesModule);
 			this.Modules.Add (this.ItemsModule);
 			this.Modules.Add (new ExpressionsModule (this));
+			this.Modules.Add (new CustomVarsModule (this));
 
 			this.Modules.ForEach (a => {
 				a.RegisterLogicConstructors (this);
