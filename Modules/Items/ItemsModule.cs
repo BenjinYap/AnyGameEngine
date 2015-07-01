@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace AnyGameEngine.Modules.Items {
 	public class ItemsModule:Module {
@@ -23,6 +24,24 @@ namespace AnyGameEngine.Modules.Items {
 
 		public override void RegisterLogicHandlers (Overlord overlord) {
 			overlord.LogicHandlers [typeof (LogicItemModify)] = DoLogicItemModify;
+		}
+
+		public override void LoadGame (Game game, Overlord overlord, XmlNode root) {
+			XmlNode items = root ["Items"];
+
+			UniqueList <string> existing = new UniqueList <string> ("Duplicate item {{}}");
+
+			for (int i = 0; i < items.ChildNodes.Count; i++) {
+				XmlNode n = items.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
+
+				existing.Add (attrs ["id"].Value);
+
+				Item item = new Item ();
+				item.Id = attrs ["id"].Value;
+				item.Name = attrs ["name"].Value;
+				game.Items.Add (item);
+			}
 		}
 
 		private void DoLogicItemModify (Game game, Save save) {

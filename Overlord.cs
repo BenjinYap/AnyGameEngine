@@ -20,7 +20,7 @@ namespace AnyGameEngine {
 		internal Dictionary <string, LogicConstructorInfo> LogicConstructorInfos = new Dictionary <string, LogicConstructorInfo> ();
 		internal Dictionary <string, ExpressionConstructorInfo> ExpressionConstructorInfos = new Dictionary <string, ExpressionConstructorInfo> ();
 
-		private List <Module> modules = new List <Module> ();
+		internal List <Module> Modules = new List <Module> ();
 
 		private bool stepDisabled = false;
 		private string invalidStepExceptionMessage = "";
@@ -30,12 +30,12 @@ namespace AnyGameEngine {
 			this.GlobalResourcesModule = new GlobalResourcesModule (this);
 			this.ItemsModule = new ItemsModule (this);
 
-			this.modules.Add (this.CoreModule);
-			this.modules.Add (this.GlobalResourcesModule);
-			this.modules.Add (this.ItemsModule);
-			this.modules.Add (new ExpressionsModule (this));
+			this.Modules.Add (this.CoreModule);
+			this.Modules.Add (this.GlobalResourcesModule);
+			this.Modules.Add (this.ItemsModule);
+			this.Modules.Add (new ExpressionsModule (this));
 
-			this.modules.ForEach (a => {
+			this.Modules.ForEach (a => {
 				a.RegisterLogicConstructors (this);
 				a.RegisterExpressionConstructors (this);
 				a.RegisterLogicHandlers (this);

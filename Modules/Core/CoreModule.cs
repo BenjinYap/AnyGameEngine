@@ -11,6 +11,7 @@ using System.Text;
 using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.Expressions;
 using AnyGameEngine.Modules.Core.ExpressionTokens;
+using System.Xml;
 
 namespace AnyGameEngine.Modules.Core {
 	public class CoreModule:Module {
@@ -56,6 +57,65 @@ namespace AnyGameEngine.Modules.Core {
 
 		public override void RegisterExpressionConstructors (Overlord overlord) {
 			overlord.ExpressionConstructorInfos.Add ("RoomValue", new ExpressionConstructorInfo (typeof (RoomValue), true));
+		}
+
+		public override void LoadGame (Game game, Overlord overlord, XmlNode root) {
+			LoadGeneral (game, root);
+			LoadRooms (game, root ["Rooms"], overlord);
+		}
+
+		private void LoadGeneral (Game game, XmlNode node) {
+			XmlAttributeCollection attrs = node.Attributes;
+			game.Name = attrs ["name"].Value;
+			game.Description = attrs ["description"].Value;
+			game.Author = attrs ["author"].Value;
+			game.StartingRoomId = attrs ["startingRoomId"].Value;
+		}
+
+		private LogicNode CreateLogic (XmlNode node, Overlord overlord) {
+			if (overlord.LogicConstructorInfos.ContainsKey (node.Name) == false) {
+				throw new Exception ("Logic class not found for " + node.Name);
+			}
+
+			List <object> args = new List <Object> {node};
+
+			if (overlord.LogicConstructorInfos [node.Name].ContainsExpressions) {
+				args.Add (overlord.ExpressionConstructorInfos);
+			}
+
+			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.LogicConstructorInfos [node.Name].Type, args.ToArray ());
+
+			if (logic is LogicList) {
+				//create the child nodes
+				for (int i = 0; i < node.ChildNodes.Count; i++) {
+					LogicNode childLogic = CreateLogic (node.ChildNodes [i], overlord);
+					logic.Nodes.Add (childLogic);
+				
+					if (i > 0) {
+						logic.Nodes [i].Prev = logic.Nodes [i - 1];
+						logic.Nodes [i - 1].Next = logic.Nodes [i];
+					}
+				}
+			}
+
+			return logic;
+		}
+
+		private void LoadRooms (Game game, XmlNode node, Overlord overlord) {
+			List <string> existingRooms = new List <string> ();
+			
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
+				XmlNode n = node.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
+				Room room = new Room ();
+				room.Id = attrs ["id"].Value;
+				room.Name = attrs ["name"].Value;
+				room.LogicList = (LogicList) CreateLogic (n.ChildNodes [0], overlord);
+				
+				existingRooms.Add (room.Id);
+				
+				game.Rooms.Add (room);
+			}
 		}
 
 		public void SelectOption (Game game, Save save, int index) {

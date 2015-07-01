@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace AnyGameEngine.Modules {
 	public class Module {
@@ -22,6 +23,10 @@ namespace AnyGameEngine.Modules {
 		}
 
 		public virtual void RegisterExpressionConstructors (Overlord overlord) {
+
+		}
+
+		public virtual void LoadGame (Game game, Overlord overlord, XmlNode root) {
 
 		}
 	}

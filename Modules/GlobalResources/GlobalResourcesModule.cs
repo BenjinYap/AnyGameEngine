@@ -1,11 +1,13 @@
 ﻿using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.GlobalResources.Logic.Actions;
+using AnyGameEngine.Other;
 using AnyGameEngine.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace AnyGameEngine.Modules.GlobalResources {
 	public class GlobalResourcesModule:Module {
@@ -27,6 +29,27 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		public override void RegisterLogicHandlers (Overlord overlord) {
 			overlord.LogicHandlers [typeof (LogicGlobalResourceSet)] = DoLogicGlobalResourceSet;
 			overlord.LogicHandlers [typeof (LogicGlobalResourceModify)] = DoLogicGlobalResourceModify;
+		}
+
+		public override void LoadGame (Game game, Overlord overlord, XmlNode root) {
+			game.GlobalResources = new List <GlobalResource> ();
+
+			XmlNode resources = root ["GlobalResources"];
+
+			UniqueList <string> existing = new UniqueList <string> ("Duplicate global resource {{}}");
+
+			for (int i = 0; i < resources.ChildNodes.Count; i++) {
+				XmlNode n = resources.ChildNodes [i];
+				XmlAttributeCollection attrs = n.Attributes;
+
+				existing.Add (attrs ["id"].Value);
+
+				GlobalResource resource = new GlobalResource ();
+				resource.Id = attrs ["id"].Value;
+				resource.Name = attrs ["name"].Value;
+				resource.StartingAmount = float.Parse (attrs ["startingAmount"].Value);
+				game.GlobalResources.Add (resource);
+			}
 		}
 
 		private void DoLogicGlobalResourceSet (Game game, Save save) {
