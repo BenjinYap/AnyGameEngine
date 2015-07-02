@@ -43,17 +43,15 @@ namespace AnyGameEngine.Modules.Core.Logic {
 		}
 
 		public LogicNode GetNextLogic () {
-			//check all the cases for nulls and stuff
-
-			if (this.Next == null) {
-				if (this.Parent is LogicLoop) {
-					return this.Parent;
-				} else if (this.Parent is LogicOption) {
-					return this.Parent.Parent.Next;  //should this be using getnextlogic?
-				} else {
-					return this.Parent == null ? null : this.Parent.Next;
+			if (this.Next == null) {  //no logic after this
+				if (this.Parent is LogicOption) {  //if parent is logic option, get the next logic of the option list
+					return this.Parent.Parent.GetNextLogic ();
+				} else if (this.Parent != null) {  //if parent is not null, get the next logic of parent
+					return this.Parent.GetNextLogic ();
+				} else {  //if parent is null, return null
+					return null;
 				}
-			} else {
+			} else {  //logic after this, return that logic
 				return this.Next;
 			}
 		}
