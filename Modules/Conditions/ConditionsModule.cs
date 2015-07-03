@@ -18,7 +18,7 @@ namespace AnyGameEngine.Modules.Conditions {
 		}
 
 		public override void RegisterLogicConstructors (Overlord overlord) {
-			overlord.LogicConstructorInfos.Add ("LogicCondition", new LogicConstructorInfo (typeof (LogicCondition), true));
+			overlord.LogicConstructorInfos.Add ("LogicCondition", new LogicConstructorInfo (typeof (LogicCondition), true, true));
 		}
 
 		public override void RegisterLogicHandlers (Overlord overlord) {

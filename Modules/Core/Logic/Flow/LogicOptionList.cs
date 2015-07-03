@@ -12,7 +12,7 @@ namespace AnyGameEngine.Modules.Core.Logic.Flow {
 
 		}
 
-		public LogicOptionList (XmlNode node):base (node) {
+		public LogicOptionList (XmlNode node, CreateLogicVessel vessel):base (node, vessel) {
 			this.Text = node.Attributes ["text"].Value;
 		}
 

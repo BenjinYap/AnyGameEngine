@@ -22,8 +22,8 @@ namespace AnyGameEngine.Modules.GlobalResources {
 		}
 
 		public override void RegisterLogicConstructors (Overlord overlord) {
-			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceSet", new LogicConstructorInfo (typeof (LogicGlobalResourceSet), false));
-			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceModify", new LogicConstructorInfo (typeof (LogicGlobalResourceModify), false));
+			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceSet", new LogicConstructorInfo (typeof (LogicGlobalResourceSet), false, false));
+			overlord.LogicConstructorInfos.Add ("LogicGlobalResourceModify", new LogicConstructorInfo (typeof (LogicGlobalResourceModify), false, false));
 		}
 
 		public override void RegisterLogicHandlers (Overlord overlord) {

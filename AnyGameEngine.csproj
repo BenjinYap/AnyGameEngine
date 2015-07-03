@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateLogicVessel.cs" />
     <Compile Include="ExpressionConstructorInfo.cs" />
     <Compile Include="LogicConstructorInfo.cs" />
     <Compile Include="Modules\Conditions\Functions\Compare.cs" />

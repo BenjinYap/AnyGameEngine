@@ -11,7 +11,7 @@ namespace AnyGameEngine.Modules.GlobalResources.Logic.Actions {
 		public float Amount;
 
 		public LogicGlobalResourceModify () {
-
+			
 		}
 
 		public LogicGlobalResourceModify (XmlNode node):base (node) {

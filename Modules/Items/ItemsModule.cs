@@ -19,7 +19,7 @@ namespace AnyGameEngine.Modules.Items {
 		}
 
 		public override void RegisterLogicConstructors (Overlord overlord) {
-			overlord.LogicConstructorInfos.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false));
+			overlord.LogicConstructorInfos.Add ("LogicItemModify", new LogicConstructorInfo (typeof (LogicItemModify), false, false));
 		}
 
 		public override void RegisterLogicHandlers (Overlord overlord) {

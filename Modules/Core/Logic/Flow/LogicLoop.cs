@@ -13,7 +13,7 @@ namespace AnyGameEngine.Modules.Core.Logic.Flow {
 
 		}
 
-		public LogicLoop (XmlNode node):base (node) {
+		public LogicLoop (XmlNode node, CreateLogicVessel vessel):base (node, vessel) {
 			this.Repeat = int.Parse (node.Attributes ["repeat"].Value);
 		}
 

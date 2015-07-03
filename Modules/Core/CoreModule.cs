@@ -32,17 +32,17 @@ namespace AnyGameEngine.Modules.Core {
 		}
 
 		public override void RegisterLogicConstructors (Overlord overlord) {
-			overlord.LogicConstructorInfos.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), true));
-			overlord.LogicConstructorInfos.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false));
+			overlord.LogicConstructorInfos.Add ("LogicText", new LogicConstructorInfo (typeof (LogicText), false, true));
+			overlord.LogicConstructorInfos.Add ("LogicRoomChange", new LogicConstructorInfo (typeof (LogicRoomChange), false, false));
 
-			overlord.LogicConstructorInfos.Add ("LogicList", new LogicConstructorInfo (typeof (LogicList), false));
-			overlord.LogicConstructorInfos.Add ("LogicOption", new LogicConstructorInfo (typeof (LogicOption), false));
-			overlord.LogicConstructorInfos.Add ("LogicOptionList", new LogicConstructorInfo (typeof (LogicOptionList), false));
-			overlord.LogicConstructorInfos.Add ("LogicBackUpOptionList", new LogicConstructorInfo (typeof (LogicBackUpOptionList), false));
-			overlord.LogicConstructorInfos.Add ("LogicLoop", new LogicConstructorInfo (typeof (LogicLoop), false));
-			overlord.LogicConstructorInfos.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false));
-			overlord.LogicConstructorInfos.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false));
-			overlord.LogicConstructorInfos.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false));
+			overlord.LogicConstructorInfos.Add ("LogicList", new LogicConstructorInfo (typeof (LogicList), true, false));
+			overlord.LogicConstructorInfos.Add ("LogicOption", new LogicConstructorInfo (typeof (LogicOption), true, false));
+			overlord.LogicConstructorInfos.Add ("LogicOptionList", new LogicConstructorInfo (typeof (LogicOptionList), true, false));
+			overlord.LogicConstructorInfos.Add ("LogicBackUpOptionList", new LogicConstructorInfo (typeof (LogicBackUpOptionList), false, false));
+			overlord.LogicConstructorInfos.Add ("LogicLoop", new LogicConstructorInfo (typeof (LogicLoop), true, false));
+			overlord.LogicConstructorInfos.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false, false));
+			overlord.LogicConstructorInfos.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false, false));
+			overlord.LogicConstructorInfos.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false, false));
 		}
 
 		public override void RegisterLogicHandlers (Overlord overlord) {
@@ -80,13 +80,17 @@ namespace AnyGameEngine.Modules.Core {
 
 			List <object> args = new List <Object> {node};
 
+			if (overlord.LogicConstructorInfos [node.Name].ContainsLogic) {
+				args.Add (new CreateLogicVessel (CreateLogic, overlord));
+			}
+
 			if (overlord.LogicConstructorInfos [node.Name].ContainsExpressions) {
 				args.Add (overlord.ExpressionConstructorInfos);
 			}
 
 			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.LogicConstructorInfos [node.Name].Type, args.ToArray ());
 
-			if (logic is LogicList) {
+			/*if (logic is LogicList) {
 				//create the child nodes
 				for (int i = 0; i < node.ChildNodes.Count; i++) {
 					LogicNode childLogic = CreateLogic (node.ChildNodes [i], overlord);
@@ -97,7 +101,9 @@ namespace AnyGameEngine.Modules.Core {
 						logic.Nodes [i - 1].Next = logic.Nodes [i];
 					}
 				}
-			} else if (logic is LogicCondition) {
+			}*/
+			
+			if (logic is LogicCondition) {
 				LogicCondition condition = (LogicCondition) logic;
 				XmlNode trueList = node.ChildNodes [1].ChildNodes [0];
 				XmlNode falseList = node.ChildNodes [2].ChildNodes [0];
