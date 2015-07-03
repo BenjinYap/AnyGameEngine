@@ -89,16 +89,6 @@ namespace AnyGameEngine.Modules.Core {
 			}
 
 			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.LogicConstructorInfos [node.Name].Type, args.ToArray ());
-
-			if (logic is LogicCondition) {
-				int i = 0;
-			//	LogicCondition condition = (LogicCondition) logic;
-			//	XmlNode trueList = node.ChildNodes [1].ChildNodes [0];
-			//	XmlNode falseList = node.ChildNodes [2].ChildNodes [0];
-			//	condition.TrueLogicList = (LogicList) CreateLogic (trueList, overlord);
-			//	condition.FalseLogicList = (LogicList) CreateLogic (falseList, overlord);
-			}
-
 			return logic;
 		}
 
@@ -124,19 +114,23 @@ namespace AnyGameEngine.Modules.Core {
 				throw new Exception (string.Format ("Bad operation. Engine is in {0} state.", this.state));
 			}
 
-			if (index < 0 || index > save.CurrentLogic.Nodes.Count - 1) {
+			LogicList list = (LogicList) save.CurrentLogic;
+
+			if (index < 0 || index > list.Nodes.Count - 1) {
 				throw new Exception ("Option index out of bounds.");
 			}
 			
 			this.state = State.Action;
 			this.Overlord.EnableStep ();
-			save.CurrentLogic = save.CurrentLogic.Nodes [index].Nodes [0];
+			save.CurrentLogic = ((LogicList) (list.Nodes [index])).Nodes [0];
 			this.Overlord.Step (game, save);
 		}
 		
 		private void DoLogicList (Game game, Save save) {
-			if (save.CurrentLogic.Nodes.Count > 0) {
-				save.CurrentLogic = save.CurrentLogic.Nodes [0];
+			LogicList list = (LogicList) save.CurrentLogic;
+
+			if (list.Nodes.Count > 0) {
+				save.CurrentLogic = list.Nodes [0];
 			} else {
 				save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
 			}
@@ -230,7 +224,7 @@ namespace AnyGameEngine.Modules.Core {
 			//if there is no logic after the logiczonechange or the next logic is an ignore
 			if (nextLogic == null || nextLogic is LogicIgnorePoint) {
 				//set the new current logic to the first logic of the new zone
-				save.CurrentLogic = room.LogicList.Clone (null).Nodes [0];
+				save.CurrentLogic = room.LogicList.Clone (null);
 			} else {  //if there is logic after the logiczonechange
 				//the first logic in the new chain
 				LogicNode newCurrentLogic = nextLogic.Clone (null);
@@ -260,7 +254,7 @@ namespace AnyGameEngine.Modules.Core {
 				}
 
 				//clone the new zone into the new chain
-				prevLogicNew.Next = room.LogicList.Clone (null).Nodes [0];
+				prevLogicNew.Next = room.LogicList.Clone (null);
 				prevLogicNew.Next.Prev = prevLogicNew;
 
 				//finally set the new logic

@@ -6,12 +6,15 @@ using System.Xml;
 
 namespace AnyGameEngine.Modules.Core.Logic.Flow {
 	public class LogicList:LogicNode {
+		public List <LogicNode> Nodes;
 
 		public LogicList () {
 
 		}
 
 		public LogicList (XmlNode node, CreateLogicVessel vessel):base (node) {
+			this.Nodes = new List <LogicNode> ();
+
 			//create the child nodes
 			for (int i = 0; i < node.ChildNodes.Count; i++) {
 				LogicNode childLogic = vessel.CreateLogic (node.ChildNodes [i]);
@@ -26,7 +29,7 @@ namespace AnyGameEngine.Modules.Core.Logic.Flow {
 		}
 
 		public override LogicNode Clone (LogicNode parent) {
-			LogicNode clone = (LogicList) base.Clone (parent);
+			LogicList clone = (LogicList) base.Clone (parent);
 			clone.Nodes = new List <LogicNode> ();
 
 			for (int i = 0; i < this.Nodes.Count; i++) {

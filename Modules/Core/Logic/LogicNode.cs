@@ -12,8 +12,7 @@ namespace AnyGameEngine.Modules.Core.Logic {
 		public LogicNode Parent;
 		public LogicNode Next;
 		public LogicNode Prev;
-		public List <LogicNode> Nodes;
-
+		
 		public LogicNode () {
 			
 		}
@@ -21,8 +20,6 @@ namespace AnyGameEngine.Modules.Core.Logic {
 		public LogicNode (XmlNode node) {
 			XmlAttributeCollection attrs = node.Attributes;
 			this.Id = attrs ["id"] == null ? "" : attrs ["id"].Value;
-
-			this.Nodes = new List <LogicNode> ();
 		}
 
 		public virtual LogicNode Clone (LogicNode parent) {
