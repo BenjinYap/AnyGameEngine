@@ -90,25 +90,13 @@ namespace AnyGameEngine.Modules.Core {
 
 			LogicNode logic = (LogicNode) Activator.CreateInstance (overlord.LogicConstructorInfos [node.Name].Type, args.ToArray ());
 
-			/*if (logic is LogicList) {
-				//create the child nodes
-				for (int i = 0; i < node.ChildNodes.Count; i++) {
-					LogicNode childLogic = CreateLogic (node.ChildNodes [i], overlord);
-					logic.Nodes.Add (childLogic);
-				
-					if (i > 0) {
-						logic.Nodes [i].Prev = logic.Nodes [i - 1];
-						logic.Nodes [i - 1].Next = logic.Nodes [i];
-					}
-				}
-			}*/
-			
 			if (logic is LogicCondition) {
-				LogicCondition condition = (LogicCondition) logic;
-				XmlNode trueList = node.ChildNodes [1].ChildNodes [0];
-				XmlNode falseList = node.ChildNodes [2].ChildNodes [0];
-				condition.TrueLogicList = (LogicList) CreateLogic (trueList, overlord);
-				condition.FalseLogicList = (LogicList) CreateLogic (falseList, overlord);
+				int i = 0;
+			//	LogicCondition condition = (LogicCondition) logic;
+			//	XmlNode trueList = node.ChildNodes [1].ChildNodes [0];
+			//	XmlNode falseList = node.ChildNodes [2].ChildNodes [0];
+			//	condition.TrueLogicList = (LogicList) CreateLogic (trueList, overlord);
+			//	condition.FalseLogicList = (LogicList) CreateLogic (falseList, overlord);
 			}
 
 			return logic;

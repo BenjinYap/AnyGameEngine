@@ -18,8 +18,10 @@ namespace AnyGameEngine.Modules.Conditions.Logic.Flow {
 			
 		}
 
-		public LogicCondition (XmlNode node, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos):base (node) {
+		public LogicCondition (XmlNode node, CreateLogicVessel vessel, Dictionary <string, ExpressionConstructorInfo> expressionConstructorInfos):base (node) {
 			this.Condition = new Expression (node.ChildNodes [0], expressionConstructorInfos);
+			this.TrueLogicList = (LogicList) vessel.CreateLogic (node.ChildNodes [1].ChildNodes [0]);
+			this.FalseLogicList = (LogicList) vessel.CreateLogic (node.ChildNodes [2].ChildNodes [0]);
 		}
 
 		public override LogicNode Clone (LogicNode parent) {

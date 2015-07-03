@@ -27,18 +27,8 @@ namespace AnyGameEngine.Modules.Core.Logic {
 
 		public virtual LogicNode Clone (LogicNode parent) {
 			LogicNode clone = (LogicNode) Activator.CreateInstance (Type.GetType (base.GetType ().AssemblyQualifiedName));
+			clone.Id = this.Id;
 			clone.Parent = parent;
-			clone.Nodes = new List <LogicNode> ();
-
-			for (int i = 0; i < this.Nodes.Count; i++) {
-				clone.Nodes.Add (this.Nodes [i].Clone (clone));
-
-				if (i > 0) {
-					clone.Nodes [i].Prev = clone.Nodes [i - 1];
-					clone.Nodes [i - 1].Next = clone.Nodes [i];
-				}
-			}
-			
 			return clone;
 		}
 
