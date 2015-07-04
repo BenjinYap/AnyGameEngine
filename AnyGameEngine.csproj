@@ -45,7 +45,7 @@
     <Compile Include="Modules\Conditions\Functions\Compare.cs" />
     <Compile Include="Modules\Conditions\Logic\Flow\LogicCondition.cs" />
     <Compile Include="Modules\Core\ExpressionTokens\RoomValue.cs" />
-    <Compile Include="Modules\CustomVars\Actions\LogicCustomSingleVarSet.cs" />
+    <Compile Include="Modules\CustomVars\Logic\Actions\LogicCustomSingleVarSet.cs" />
     <Compile Include="Modules\CustomVars\CustomVarsModule.cs" />
     <Compile Include="Modules\CustomVars\ExpressionTokens\CustomSingleVarValue.cs" />
     <Compile Include="Modules\Expressions\Constant.cs" />
