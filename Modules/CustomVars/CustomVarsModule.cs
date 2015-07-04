@@ -1,5 +1,6 @@
 ﻿using AnyGameEngine.GameData;
 using AnyGameEngine.Modules.CustomVars.ExpressionTokens;
+using AnyGameEngine.Modules.CustomVars.Logic.Actions;
 using AnyGameEngine.Other;
 using AnyGameEngine.SaveData;
 using System;
@@ -13,6 +14,14 @@ namespace AnyGameEngine.Modules.CustomVars {
 		
 		public CustomVarsModule (Overlord overlord):base (overlord) {
 			
+		}
+
+		public override void RegisterLogicConstructors (Overlord overlord) {
+			overlord.LogicConstructorInfos.Add ("LogicCustomSingleVarSet", new LogicConstructorInfo (typeof (LogicCustomSingleVarSet), false, true));
+		}
+
+		public override void RegisterLogicHandlers (Overlord overlord) {
+			overlord.LogicHandlers [typeof (LogicCustomSingleVarSet)] = DoCustomSingleVarSet;
 		}
 
 		public override void RegisterExpressionConstructors (Overlord overlord) {
@@ -45,6 +54,14 @@ namespace AnyGameEngine.Modules.CustomVars {
 
 				game.CustomVars.Add (customVar);
 			} 
+		}
+
+		private void DoCustomSingleVarSet (Game game, Save save) {
+			LogicCustomSingleVarSet logic = (LogicCustomSingleVarSet) save.CurrentLogic;
+			
+
+			save.CurrentLogic = logic.GetNextLogic ();
+			this.Overlord.Step (game, save);
 		}
 	}
 }
