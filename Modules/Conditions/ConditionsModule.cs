@@ -38,9 +38,7 @@ namespace AnyGameEngine.Modules.Conditions {
 			//get the new list depending on result
 			LogicList newList = result ? condition.TrueLogicList : condition.FalseLogicList;
 
-			//clone the new list
-			newList = (LogicList) newList.Clone (condition.Parent);
-
+			//set the prev and next logic to be the same as the condition's
 			newList.Prev = condition.Prev;
 			newList.Next = condition.GetNextLogic ();
 
