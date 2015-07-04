@@ -7,12 +7,18 @@ namespace AnyGameEngine.Modules.CustomVars {
 	public class CustomArrayVar:CustomVar {
 		public string [] Values;
 
-		public CustomArrayVar (string [] values) {
+		public CustomArrayVar (string name):base (name) {
+
+		}
+
+		public CustomArrayVar (string name, string [] values):base (name) {
 			this.Values = values;
 		}
 
 		public override CustomVar Clone () {
-			return new CustomArrayVar (this.Values);
+			CustomArrayVar clone = (CustomArrayVar) base.Clone ();
+			clone.Values = this.Values;
+			return clone;
 		}
 	}
 }

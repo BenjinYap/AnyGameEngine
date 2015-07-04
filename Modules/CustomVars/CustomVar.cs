@@ -7,6 +7,13 @@ namespace AnyGameEngine.Modules.CustomVars {
 	public abstract class CustomVar {
 		public string Name;
 
-		public abstract CustomVar Clone ();
+		public CustomVar (string name) {
+			this.Name = name;
+		}
+
+		public virtual CustomVar Clone () {
+			return (CustomVar) Activator.CreateInstance (Type.GetType (base.GetType ().AssemblyQualifiedName), new object [] {this.Name});
+			
+		}
 	}
 }

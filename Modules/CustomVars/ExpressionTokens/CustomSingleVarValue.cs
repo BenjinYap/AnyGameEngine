@@ -14,7 +14,7 @@ namespace AnyGameEngine.Modules.CustomVars.ExpressionTokens {
 		}
 
 		public override string Evaluate (Game game, Save save) {
-			CustomSingleVar var = (CustomSingleVar) game.CustomVars.Find (a => a.Name == this.name);
+			CustomSingleVar var = (CustomSingleVar) save.CustomVars.Find (a => a.Name == this.name);
 			return var.Value;
 		}
 	}

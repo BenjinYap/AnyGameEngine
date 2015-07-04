@@ -44,13 +44,11 @@ namespace AnyGameEngine.Modules.CustomVars {
 
 				if (v.Name == "CustomArrayVar") {
 					string [] values = attrs ["values"].Value.Split (',');
-					customVar = new CustomArrayVar (values);
+					customVar = new CustomArrayVar (name, values);
 				} else {
 					string value = attrs ["value"].Value;
-					customVar = new CustomSingleVar (value);
+					customVar = new CustomSingleVar (name, value);
 				}
-
-				customVar.Name = name;
 
 				game.CustomVars.Add (customVar);
 			} 
@@ -58,8 +56,8 @@ namespace AnyGameEngine.Modules.CustomVars {
 
 		private void DoCustomSingleVarSet (Game game, Save save) {
 			LogicCustomSingleVarSet logic = (LogicCustomSingleVarSet) save.CurrentLogic;
+			((CustomSingleVar) (save.CustomVars.Find (a => a.Name == logic.Name))).Value = logic.Value.Evaluate (game, save);
 			
-
 			save.CurrentLogic = logic.GetNextLogic ();
 			this.Overlord.Step (game, save);
 		}
