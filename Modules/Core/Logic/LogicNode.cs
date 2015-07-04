@@ -33,6 +33,8 @@ namespace AnyGameEngine.Modules.Core.Logic {
 			if (this.Next == null) {  //no logic after this
 				if (this.Parent is LogicOption) {  //if parent is logic option, get the next logic of the option list
 					return this.Parent.Parent.GetNextLogic ();
+				} else if (this.Parent is LogicLoop) {
+					return this.Parent;
 				} else if (this.Parent != null) {  //if parent is not null, get the next logic of parent
 					return this.Parent.GetNextLogic ();
 				} else {  //if parent is null, return null
