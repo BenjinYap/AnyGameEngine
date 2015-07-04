@@ -227,35 +227,25 @@ namespace AnyGameEngine.Modules.Core {
 				save.CurrentLogic = room.LogicList.Clone (null);
 			} else {  //if there is logic after the logiczonechange
 				//the first logic in the new chain
-				LogicNode newCurrentLogic = nextLogic.Clone (null);
+				LogicNode newCurrentLogic = nextLogic;
 
-				//reference to the previous logic in the new chain
-				LogicNode prevLogicNew = newCurrentLogic;
+				//the final logic in the old chain
+				LogicNode finalLogic = nextLogic;
 
-				//reference to the previous logic in the old chain
-				LogicNode prevLogic = nextLogic;
-
+				//get the final logic in the old chain
 				while (true) {
-					//get the next logic in the old chain
-					nextLogic = prevLogic.GetNextLogic ();
+					nextLogic = finalLogic.GetNextLogic ();
 
-					//stop if there's nothing or it's an ignore
 					if (nextLogic == null || nextLogic is LogicIgnorePoint) {
 						break;
 					}
 
-					//clone the old chain into the new chain
-					prevLogicNew.Next = nextLogic.Clone (null);
-					prevLogicNew.Next.Prev = prevLogicNew;
-
-					//reset the old and new references
-					prevLogicNew = prevLogicNew.Next;
-					prevLogic = nextLogic;
+					finalLogic = nextLogic;
 				}
-
+				
 				//clone the new zone into the new chain
-				prevLogicNew.Next = room.LogicList.Clone (null);
-				prevLogicNew.Next.Prev = prevLogicNew;
+				finalLogic.Next = room.LogicList.Clone (finalLogic.Parent);
+				finalLogic.Next.Prev = finalLogic.Next;
 
 				//finally set the new logic
 				save.CurrentLogic = newCurrentLogic;
