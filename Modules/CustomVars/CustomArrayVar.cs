@@ -10,5 +10,9 @@ namespace AnyGameEngine.Modules.CustomVars {
 		public CustomArrayVar (string [] values) {
 			this.Values = values;
 		}
+
+		public override CustomVar Clone () {
+			return new CustomArrayVar (this.Values);
+		}
 	}
 }

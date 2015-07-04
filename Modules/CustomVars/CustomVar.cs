@@ -6,5 +6,7 @@ using System.Text;
 namespace AnyGameEngine.Modules.CustomVars {
 	public abstract class CustomVar {
 		public string Name;
+
+		public abstract CustomVar Clone ();
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AnyGameEngine.Modules.Core.Logic;
+using AnyGameEngine.Modules.CustomVars;
 using AnyGameEngine.Modules.GlobalResources;
 using AnyGameEngine.Modules.Items;
 using AnyGameEngine.Other;
@@ -18,6 +19,8 @@ namespace AnyGameEngine.SaveData {
 		public LogicNode CurrentLogic;
 
 		public ObservableDictionary <string, float> GlobalResources = new ObservableDictionary <string, float> ();
+
+		public List <CustomVar> CustomVars = new List <CustomVar> ();
 
 		public ObservableCollection <ItemStack> ItemStacks { get; set; }
 

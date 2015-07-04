@@ -47,6 +47,8 @@ namespace AnyGameEngine.GameData {
 
 			this.GlobalResources.ForEach (a => save.GlobalResources [a.Id] = a.StartingAmount);
 			
+			this.CustomVars.ForEach (a => save.CustomVars.Add (a.Clone ()));
+
 			Room room = this.Rooms.Find (a => a.Id == this.StartingRoomId);
 			save.CurrentLogic = room.LogicList.Clone (null);
 			return save;
