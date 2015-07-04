@@ -30,6 +30,7 @@ namespace AnyGameEngine.Modules.CustomVars.Logic.Actions {
 
 		public override LogicNode Clone (LogicNode parent) {
 			LogicCustomSingleVarSet clone = (LogicCustomSingleVarSet) base.Clone (parent);
+			clone.Name = this.Name;
 			clone.Value = this.Value;
 			return clone;
 		}
