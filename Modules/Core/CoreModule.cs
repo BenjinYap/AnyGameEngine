@@ -51,6 +51,7 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicHandlers [typeof (LogicLoopContinue)] = DoLogicLoopContinue;
 			overlord.LogicHandlers [typeof (LogicLoopBreak)] = DoLogicLoopBreak;
 			overlord.LogicHandlers [typeof (LogicOptionList)] = DoLogicOptionList;
+			overlord.LogicHandlers [typeof (LogicBackUpOptionList)] = DoLogicBackUpOptionList;
 
 			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
