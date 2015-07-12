@@ -43,6 +43,7 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicConstructorInfos.Add ("LogicLoopBreak", new LogicConstructorInfo (typeof (LogicLoopBreak), false, false));
 			overlord.LogicConstructorInfos.Add ("LogicLoopContinue", new LogicConstructorInfo (typeof (LogicLoopContinue), false, false));
 			overlord.LogicConstructorInfos.Add ("LogicIgnorePoint", new LogicConstructorInfo (typeof (LogicIgnorePoint), false, false));
+			overlord.LogicConstructorInfos.Add ("LogicPointer", new LogicConstructorInfo (typeof (LogicPointer), false, false));
 		}
 
 		public override void RegisterLogicHandlers (Overlord overlord) {
@@ -52,6 +53,8 @@ namespace AnyGameEngine.Modules.Core {
 			overlord.LogicHandlers [typeof (LogicLoopBreak)] = DoLogicLoopBreak;
 			overlord.LogicHandlers [typeof (LogicOptionList)] = DoLogicOptionList;
 			overlord.LogicHandlers [typeof (LogicBackUpOptionList)] = DoLogicBackUpOptionList;
+			overlord.LogicHandlers [typeof (LogicIgnorePoint)] = DoLogicIgnorePoint;
+			overlord.LogicHandlers [typeof (LogicPointer)] = DoLogicPointer;
 
 			overlord.LogicHandlers [typeof (LogicText)] = DoLogicText;
 			overlord.LogicHandlers [typeof (LogicRoomChange)] = DoLogicRoomChange;
@@ -213,6 +216,10 @@ namespace AnyGameEngine.Modules.Core {
 			this.Overlord.Step (game, save);
 		}
 		
+		private void DoLogicPointer (Game game, Save save) {
+
+		}
+
 		private void DoLogicText (Game game, Save save) {
 			string text = ((LogicText) save.CurrentLogic).Text.Evaluate (game, save);
 			save.CurrentLogic = save.CurrentLogic.GetNextLogic ();
