@@ -217,7 +217,12 @@ namespace AnyGameEngine.Modules.Core {
 		}
 		
 		private void DoLogicPointer (Game game, Save save) {
-
+			LogicPointer pointer = (LogicPointer) save.CurrentLogic;
+			LogicNode clone = game.Logic.Find (a => a.Id == pointer.LogicId).Clone (pointer.Parent);
+			clone.Prev = pointer.Prev;
+			clone.Next = pointer.Next;
+			save.CurrentLogic = clone;
+			this.Overlord.Step (game, save);
 		}
 
 		private void DoLogicText (Game game, Save save) {
