@@ -12,6 +12,7 @@ namespace AnyGameEngine.Modules.Expressions {
 			overlord.ExpressionConstructorInfos.Add ("Constant", new ExpressionConstructorInfo (typeof (Constant), false));
 
 			overlord.ExpressionConstructorInfos.Add ("Concatenate", new ExpressionConstructorInfo (typeof (Concatenate), false));
+			overlord.ExpressionConstructorInfos.Add ("RandomInt", new ExpressionConstructorInfo (typeof (RandomInt), false));
 		}
 	}
 }

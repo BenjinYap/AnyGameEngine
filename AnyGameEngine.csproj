@@ -53,6 +53,7 @@
     <Compile Include="Modules\Expressions\Expression.cs" />
     <Compile Include="Modules\Expressions\ExpressionToken.cs" />
     <Compile Include="Modules\Expressions\ExpressionsModule.cs" />
+    <Compile Include="Modules\Expressions\Functions\RandomInt.cs" />
     <Compile Include="Modules\Expressions\Functions\Concatenate.cs" />
     <Compile Include="Modules\Expressions\Functions\Function.cs" />
     <Compile Include="Modules\Expressions\IEvaluate.cs" />
