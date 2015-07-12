@@ -64,6 +64,7 @@ namespace AnyGameEngine.Modules.Core {
 		public override void LoadGame (Game game, Overlord overlord, XmlNode root) {
 			LoadGeneral (game, root);
 			LoadRooms (game, root ["Rooms"], overlord);
+			LoadLogic (game, root ["Logic"], overlord);
 		}
 
 		private void LoadGeneral (Game game, XmlNode node) {
@@ -107,6 +108,13 @@ namespace AnyGameEngine.Modules.Core {
 				existingRooms.Add (room.Id);
 				
 				game.Rooms.Add (room);
+			}
+		}
+
+		private void LoadLogic (Game game, XmlNode node, Overlord overlord) {
+			for (int i = 0; i < node.ChildNodes.Count; i++) {
+				XmlNode n = node.ChildNodes [i];
+				game.Logic.Add (CreateLogic (n, overlord));
 			}
 		}
 

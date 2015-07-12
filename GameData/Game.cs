@@ -29,6 +29,8 @@ namespace AnyGameEngine.GameData {
 
 		public List <Item> Items = new List <Item> ();
 
+		public List <LogicNode> Logic = new List <LogicNode> ();
+
 		public Dictionary <string, object> ModuleVars = new Dictionary <string, object> ();
 
 		public Game (Overlord overlord, string path) {
